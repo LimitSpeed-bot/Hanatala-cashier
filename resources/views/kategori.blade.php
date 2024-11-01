@@ -13,6 +13,8 @@
 
     <!-- Custom fonts for this template-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -177,7 +179,31 @@
                     </ul>
 
                 </nav>
-
+                <div class="section-tabel">
+                <h1>Kategori</h1><span><button class="btn btn-primary float-end">Tambah Kategori</button></span>
+                <table class="table tb">
+                    <thead>
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Nama Kategori</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Bunga</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Kue</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td >Mahar</td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
                 <!-- Logout Modal-->
                 <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">

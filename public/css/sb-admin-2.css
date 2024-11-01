@@ -1488,6 +1488,16 @@ pre code {
   color: #858796;
 }
 
+.tb{
+  margin-top: 75px;
+}
+
+.line{
+  border-top: 1px solid #fc99ff; /* Adjust color and thickness as needed */
+      width: 10rem; /* Adjust width as needed */
+      margin: 10px 0; /* Add spacing around the line */
+    }
+
 .table th,
 .table td {
   padding: 0.75rem;
@@ -11278,4 +11288,12 @@ footer.sticky-footer .copyright {
 
 body.sidebar-toggled footer.sticky-footer {
   width: 100%;
+}
+.table{
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.section-tabel{
+  margin: 0 30px;
 }
