@@ -182,7 +182,7 @@
 
                 <h1>Transaksi</h1>
                 <select class="form-select form-select-lg mb-3" aria-label="Large select example">
-                    <option selected>Pilih Transaksi</option>
+                    <option selected>Pilih Barang</option>
                     <option value="1">One</option>
                     <option value="2">Two</option>
                     <option value="3">Three</option>
@@ -192,9 +192,10 @@
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Nama Barang</th>
+      <th scope="col">Harga</th>
+      <th scope="col">Jumlah Beli</th>
+      <th scope="col">Jumlah Harga</th>
     </tr>
   </thead>
   <tbody>
@@ -252,7 +253,7 @@
     </form>
 
   <!-- Total Harga and Buttons Section -->
- 
+
 </div>
 <div class="col-5">
 <div class="col-md-12 text-end">

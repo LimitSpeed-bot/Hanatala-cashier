@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\BarangController;
+use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\PelangganController;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpKernel\DataCollector\RouterDataCollector;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,18 +33,6 @@ Route::get('/forgot', function () {
     return view('user/forgot');
 });
 
-Route::get('/kategori', function () {
-    return view('kategori');
-});
-
-Route::get('/barang', function () {
-    return view('barang');
-});
-
-Route::get('/pelanggan', function () {
-    return view('pelanggan');
-});
-
 Route::get('/kasir', function () {
     return view('kasir');
 });
@@ -48,3 +40,49 @@ Route::get('/kasir', function () {
 Route::get('/transaksi', function () {
     return view('transaksi');
 });
+
+Route::controller(KategoriController::class)->prefix('kategori')->group(function () {
+    Route::get('', 'index')->name('kategori');
+    Route::post('store', 'store')->name('kategori.store');
+    Route::put('update/{id}', 'update')->name('kategori.update');
+    Route::delete('destroy/{id}', 'destroy')->name('kategori.destroy');
+});
+Route::controller(PelangganController::class)->prefix('pelanggan')->group(function() {
+    Route::get('', 'index')->name('pelanggan');
+    Route::post('store', 'store')->name('pelanggan.store');
+    Route::put('update/{id}', 'update')->name('pelanggan.update');
+    Route::delete('destroy/{id}', 'destroy')->name('pelanggan.destroy');
+});
+Route::controller(BarangController::class)->prefix('barang')->group(function () {
+    Route::get('', 'index')->name('barang');
+    Route::post('store', 'store')->name('barang.store');
+    Route::put('update/{id}', 'update')->name('barang.update');
+    Route::delete('destroy/{id}', 'destroy')->name('barang.destroy');
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
