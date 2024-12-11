@@ -13,13 +13,13 @@
 
     <!-- Custom fonts for this template-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
- 
+
     <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.css" rel="stylesheet">
+    <link href="{{ asset('css/sb-admin-2.css') }}" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -27,10 +27,8 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-            <!-- Sidebar - Brand -->
             <div class="sidebar-brand d-flex align-items-center justify-content-center">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="bi bi-flower2"></i>
@@ -38,62 +36,54 @@
                 <div class="sidebar-brand-text mx-3">Hanatala</div>
             </div>
 
-            <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="{{url('/')}}">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('/index') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
 
-            <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Interface
-            </div>
+            <div class="sidebar-heading">Interface</div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{url('/kategori')}}">
+                <a class="nav-link" href="{{ url('/admin/kategori') }}">
                     <i class="bi bi-boxes"></i>
                     <span>Kategori</span>
                 </a>
             </li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{url('/barang')}}">
+                <a class="nav-link" href="{{ url('/admin/barang') }}">
                     <i class="bi bi-box"></i>
                     <span>Barang</span>
                 </a>
             </li>
+
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{url('/pelanggan')}}">
+                <a class="nav-link" href="{{ url('/admin/pelanggan') }}">
                     <i class="bi bi-file-person-fill"></i>
                     <span>Pelanggan</span>
                 </a>
             </li>
+
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{url('/kasir')}}">
+                <a class="nav-link" href="{{ url('/admin/kasir') }}">
                     <i class="bi bi-calculator"></i>
                     <span>Kasir</span>
                 </a>
             </li>
+
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{url('/transaksi')}}">
+                <a class="nav-link" href="{{ url('/admin/transaksi') }}">
                     <i class="bi bi-wallet2"></i>
                     <span>Transaksi</span>
                 </a>
             </li>
-
-
-
-
         </ul>
+
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -114,8 +104,8 @@
                     <form
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
+                            <input type="text" class="form-control bg-light border-0 small"
+                                placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="button">
                                     <i class="fas fa-search fa-sm"></i>
@@ -173,7 +163,8 @@
                                     </div>
                                     <div>
                                         <div class="small text-gray-500">December 12, 2019</div>
-                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                                        <span class="font-weight-bold">A new monthly report is ready to
+                                            download!</span>
                                     </div>
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
@@ -198,7 +189,8 @@
                                         Spending Alert: We've noticed unusually high spending for your account.
                                     </div>
                                 </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All
+                                    Alerts</a>
                             </div>
                         </li>
 
@@ -218,8 +210,7 @@
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
-                                            alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_1.svg" alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div class="font-weight-bold">
@@ -230,8 +221,7 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
-                                            alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_2.svg" alt="...">
                                         <div class="status-indicator"></div>
                                     </div>
                                     <div>
@@ -242,20 +232,20 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
-                                            alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_3.svg" alt="...">
                                         <div class="status-indicator bg-warning"></div>
                                     </div>
                                     <div>
-                                        <div class="text-truncate">Last month's report looks great, I am very happy with
+                                        <div class="text-truncate">Last month's report looks great, I am very happy
+                                            with
                                             the progress so far, keep up the good work!</div>
                                         <div class="small text-gray-500">Morgan Alvarez · 2d</div>
                                     </div>
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                                            alt="...">
+                                        <img class="rounded-circle"
+                                            src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div>
@@ -264,7 +254,8 @@
                                         <div class="small text-gray-500">Chicken the Dog · 2w</div>
                                     </div>
                                 </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More
+                                    Messages</a>
                             </div>
                         </li>
 
@@ -275,14 +266,14 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{url('/login')}}" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="{{ url('/login') }}" data-toggle="modal"
+                                    data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -392,78 +383,61 @@
                     </div>
                     <h2>Riwayat Transaksi</h2>
                     <!-- End of Main Content -->
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">First</th>
-                                <th scope="col">Last</th>
-                                <th scope="col">Handle</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Larry the Bird</td>
-                                <td>@twitter</td>
-                                <td>@twitter</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>Larry the Bird</td>
-                                <td>@twitter</td>
-                                <td>@twitter</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">5</th>
-                                <td>Larry the Bird</td>
-                                <td>@twitter</td>
-                                <td>@twitter</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">6</th>
-                                <td>Larry the Bird</td>
-                                <td>@twitter</td>
-                                <td>@twitter</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">7</th>
-                                <td>Larry the Bird</td>
-                                <td>@twitter</td>
-                                <td>@twitter</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">8</th>
-                                <td>Larry the Bird</td>
-                                <td>@twitter</td>
-                                <td>@twitter</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">9</th>
-                                <td>Larry the Bird</td>
-                                <td>@twitter</td>
-                                <td>@twitter</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">10</th>
-                                <td>Larry the Bird</td>
-                                <td>@twitter</td>
-                                <td>@twitter</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="container">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>ID Transaksi</th>
+                                    <th>Tanggal Jual</th>
+                                    <th>Total</th>
+                                    <th>Detail Barang</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($transaksi as $t)
+                                    <tr>
+                                        <td>{{ $t->id }}</td>
+                                        <td>{{ $t->tanggal_jual }}</td>
+                                        <td>Rp {{ number_format($t->total, 0, ',', '.') }}</td>
+                                        <td>
+                                            <button class="btn btn-primary btn-sm"
+                                                onclick="showDetails({{ $t->id }})">Show</button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                        <div id="details-modal" class="modal fade" tabindex="-1" role="dialog"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Detail Barang</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table class="table table-bordered" id="details-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nama Barang</th>
+                                                    <th>Harga</th>
+                                                    <th>Jumlah</th>
+                                                    <th>Subtotal</th>
+                                                    <th>Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Detail transaksi akan dimuat di sini -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Footer -->
                     <footer class="sticky-footer bg-white">
                         <div class="container my-auto">
@@ -486,8 +460,8 @@
             </a>
 
             <!-- Logout Modal-->
-            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
+            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -496,15 +470,17 @@
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                        <div class="modal-body">Select "Logout" below if you are ready to end your current session.
+                        </div>
                         <div class="modal-footer">
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <a class="btn btn-primary" href="{{url('/login')}}">Logout</a>
+                            <a class="btn btn-primary" href="{{ route('logout') }}">Logout</a>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <script src="{{ url('dist/js/jquery-3.7.1.js') }}"></script>
             <!-- Bootstrap core JavaScript-->
             <script src="vendor/jquery/jquery.min.js"></script>
             <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -521,7 +497,49 @@
             <!-- Page level custom scripts -->
             <script src="js/demo/chart-area-demo.js"></script>
             <script src="js/demo/chart-pie-demo.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+            </script>
 
+            <script>
+                function showDetails(transactionId) {
+                    $.get('/api/transaction/' + transactionId, function(data) {
+                        let rows = '';
+                        data.details.forEach(detail => {
+                            rows += `
+                    <tr>
+                        <td>${detail.barang.nama_barang}</td>
+                        <td>Rp ${detail.harga}</td>
+                        <td>${detail.qty}</td>
+                        <td>Rp ${detail.qty * detail.harga}</td>
+                        <td>
+                            <button class="btn btn-danger btn-sm" onclick="deleteDetail(${detail.id})">Hapus</button>
+                            <a href="{{ route('report.cetak') }}" class="btn btn-success mb-3" target="_blank">Cetak Laporan</a>
+                        </td>
+                    </tr>`;
+                        });
+                        $('#details-table tbody').html(rows);
+                        $('#details-modal').modal('show');
+                    });
+                }
+
+                function deleteDetail(detailId) {
+                    if (confirm('Apakah Anda yakin ingin menghapus item ini?')) {
+                        $.ajax({
+                            url: '/report/destroy/' + detailId,
+                            type: 'DELETE',
+                            success: function(response) {
+                                alert(response.message);
+                                $('#details-modal').modal('hide');
+                                location.reload();
+                            },
+                            error: function(xhr) {
+                                alert('Terjadi kesalahan: ' + xhr.responseJSON.message);
+                            }
+                        });
+                    }
+                }
+            </script>
 </body>
 
 </html>

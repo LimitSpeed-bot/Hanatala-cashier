@@ -19,18 +19,10 @@ class PelangganController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        Pelanggan::create($request->all());
-        return redirect()->route('pelanggan')->with('Data masuk');
+       Pelanggan::create($request->all());
+       return redirect()->route('admin.pelanggan')->with('success', 'Pelanggan ditambahkan');
     }
 
     /**
@@ -56,7 +48,7 @@ class PelangganController extends Controller
     {
         $pelanggan = Pelanggan::find($id);
         $pelanggan->update($request->all());
-        return redirect()->route('pelanggan')->with('Data berhasil di update');
+        return redirect()->route('admin.pelanggan')->with('Data berhasil di update');
     }
 
     /**
@@ -66,6 +58,6 @@ class PelangganController extends Controller
     {
         $pelanggan = Pelanggan::find($id);
         $pelanggan->delete();
-        return redirect()->route('pelanggan')->with('data dihapus');
+        return redirect()->route('admin.pelanggan')->with('data dihapus');
     }
 }

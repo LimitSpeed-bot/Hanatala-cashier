@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kategori;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
-class KategoriController extends Controller
+class RegisterController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $kategori=Kategori::all();
-        return view('kategori', compact('kategori'));
+        return view('user.register');
     }
 
     /**
@@ -29,8 +30,28 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
-        Kategori::create($request->all());
-        return redirect()->route('admin.kategori')->with('Data masuk');
+        $request->validate([
+            'nama' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6',
+        ]);
+
+        $data['name'] = $request->nama;
+        $data['email'] = $request->email;
+        $data['password'] = Hash::make($request->password);
+
+        User::create($data);
+
+        $login = [
+            'email' => $request->email,
+            'password' => $request->password,
+        ];
+
+        if(Auth::attempt($login)){
+            return redirect()->route('admin.');
+        }else{
+            return redirect()->route('login')->with('failed','Email atau Password Salah');
+        };
     }
 
     /**
@@ -54,9 +75,7 @@ class KategoriController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $kategori = Kategori::find($id);
-        $kategori->update($request->all());
-        return redirect()->route('admin.kategori')->with('berhasil di edit');
+        //
     }
 
     /**
@@ -64,8 +83,6 @@ class KategoriController extends Controller
      */
     public function destroy(string $id)
     {
-        $kategori = Kategori::find($id);
-        $kategori->delete();
-        return redirect()->route('admin.kategori')->with('Data Dihapus');
+        //
     }
 }

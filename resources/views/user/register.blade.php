@@ -36,48 +36,43 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                             </div>
-                            <form class="user">
+                            <form class="user" method="POST" action="{{route('register.store')}}">
+                                @csrf
                                 <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <div class="col-sm-12 mb-sm-0">
                                         <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                                            placeholder="First Name">
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" id="exampleLastName"
-                                            placeholder="Last Name">
+                                            placeholder="First Name" name="nama" value="{{old('nama')}}">
+                                            @error('nama')
+                                            <small>{{ $message }}</small>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <input type="email" class="form-control form-control-user" id="exampleInputEmail"
-                                        placeholder="Email Address">
+                                        placeholder="Email Address" name="email" value="{{old('email')}}">
+                                        @error('email')
+                                        <small>{{ $message }}</small>
+                                    @enderror
                                 </div>
                                 <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <div class="col-sm-12 mb-sm-0">
                                         <input type="password" class="form-control form-control-user"
-                                            id="exampleInputPassword" placeholder="Password">
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <input type="password" class="form-control form-control-user"
-                                            id="exampleRepeatPassword" placeholder="Repeat Password">
+                                            id="exampleInputPassword" placeholder="Password" name="password">
+                                            @error('password')
+                                            <small>{{ $message }}</small>
+                                        @enderror
                                     </div>
                                 </div>
-                                <a href="login.html" class="btn btn-primary btn-user btn-block">
+                                <button action="submit" class="btn btn-primary btn-user btn-block">
                                     Register Account
-                                </a>
-                                <hr>
-                                <a href="index.html" class="btn btn-google btn-user btn-block">
-                                    <i class="fab fa-google fa-fw"></i> Register with Google
-                                </a>
-                                <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                    <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
-                                </a>
+                                </button>
                             </form>
                             <hr>
                             <div class="text-center">
                                 <a class="small" href="forgot-password.html">Forgot Password?</a>
                             </div>
                             <div class="text-center">
-                                <a class="small" href="login.html">Already have an account? Login!</a>
+                                <a class="small" href="{{url('login')}}">Already have an account? Login!</a>
                             </div>
                         </div>
                     </div>
@@ -96,6 +91,26 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @if (Session::get('success'))
+        <script>
+            Swal.fire({
+                title: "Berhasil Logout",
+                text: "Anda Telah Logout",
+                icon: "success"
+            });
+        </script>
+    @endif
+    @if (Session::get('failed'))
+        <script>
+            Swal.fire({
+                title: "Gagal Login",
+                text: "Password atau Email salah",
+                icon: "error"
+            });
+        </script>
+    @endif
 
 </body>
 

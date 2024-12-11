@@ -16,14 +16,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
     <link rel="stylesheet" href="{{ url('/dist/css/dataTables.dataTables.css') }}">
 
     <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.css" rel="stylesheet">
+    <link href="{{ asset('css/sb-admin-2.css') }}" rel="stylesheet">
 
 </head>
 
@@ -32,10 +32,8 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-            <!-- Sidebar - Brand -->
             <div class="sidebar-brand d-flex align-items-center justify-content-center">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="bi bi-flower2"></i>
@@ -43,61 +41,52 @@
                 <div class="sidebar-brand-text mx-3">Hanatala</div>
             </div>
 
-            <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('/') }}">
+                <a class="nav-link" href="{{url('/index')}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
 
-            <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Interface
-            </div>
+            <div class="sidebar-heading">Interface</div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ url('/kategori') }}">
+                <a class="nav-link" href="{{url('/admin/kategori')}}">
                     <i class="bi bi-boxes"></i>
                     <span>Kategori</span>
                 </a>
             </li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item active">
-                <a class="nav-link collapsed" href="{{ url('/barang') }}">
+            <li class="nav-item">
+                <a class="nav-link" href="{{url('/admin/barang')}}">
                     <i class="bi bi-box"></i>
                     <span>Barang</span>
                 </a>
             </li>
+
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ url('/pelanggan') }}">
+                <a class="nav-link" href="{{url('/admin/pelanggan')}}">
                     <i class="bi bi-file-person-fill"></i>
                     <span>Pelanggan</span>
                 </a>
             </li>
+
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ url('/kasir') }}">
+                <a class="nav-link" href="{{url('/admin/kasir')}}">
                     <i class="bi bi-calculator"></i>
                     <span>Kasir</span>
                 </a>
             </li>
+
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ url('/transaksi') }}">
+                <a class="nav-link" href="{{url('/admin/transaksi')}}">
                     <i class="bi bi-wallet2"></i>
                     <span>Transaksi</span>
                 </a>
             </li>
-
-
-
-
         </ul>
         <!-- End of Sidebar -->
 
@@ -164,14 +153,14 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                <img class="img-profile rounded-circle"
+                                    src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{ url('/login') }}" data-toggle="modal"
-                                    data-target="#logoutModal">
+                                <a class="dropdown-item" href="{{url('/login')}}" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -192,7 +181,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
-                            <form action="{{ route('barang.store') }}" method="POST">
+                            <form action="{{ route('admin.barang.store') }}" method="POST">
                                 @csrf
                                 <div class="modal-body">
                                     <div class="mb-3">
@@ -202,7 +191,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="exampleFormControlInput1" class="form-label">Harga</label>
-                                        <input type="number" class="form-control"id="nama_barang"
+                                        <input type="number" class="form-control"id="harga"
                                             placeholder="10000" name="harga">
                                     </div>
                                     <div class="mb-3">
@@ -255,7 +244,7 @@
                                                 data-bs-target="#editModal{{ $item->id }}">Ubah</button>
 
                                             <!-- Tombol Hapus -->
-                                            <form action="{{ route('barang.destroy', $item->id) }}" method="POST" style="display:inline;">
+                                            <form action="{{ route('admin.barang.destroy', $item->id) }}" method="POST" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus barang ini?')">Hapus</button>
@@ -269,7 +258,7 @@
                                     aria-labelledby="editModalLabel{{ $item->id }}" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
-                                            <form action="{{ route('barang.update', $item->id) }}" method="POST">
+                                            <form action="{{ route('admin.barang.update', $item->id) }}" method="POST">
                                                 @csrf
                                                 @method('PUT')
                                                 <div class="modal-header">

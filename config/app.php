@@ -14,6 +14,9 @@ return [
     | any other location as required by the application or its packages.
     |
     */
+    'providers' => [
+        Barryvdh\DomPDF\ServiceProvider::class,
+    ],
 
     'name' => env('APP_NAME', 'Laravel'),
 
@@ -194,6 +197,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
     ],
 
@@ -209,6 +213,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
+        'PDF' => Barryvdh\DomPDF\Facade::class,
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 

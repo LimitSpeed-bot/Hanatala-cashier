@@ -35,7 +35,7 @@ class BarangController extends Controller
     {
         $kategori = Kategori::find($request->kategori_id);
         Barang::create($request->all());
-        return redirect()->route('barang')->with('Data Masuk');
+        return redirect()->route('admin.barang')->with('Data Masuk');
     }
 
     /**
@@ -77,7 +77,7 @@ class BarangController extends Controller
         ]);
 
         // Redirect dengan pesan sukses
-        return redirect()->route('barang')->with('success', 'Data Barang berhasil diperbarui.');
+        return redirect()->route('admin.barang')->with('success', 'Data Barang berhasil diperbarui.');
     }
 
 
@@ -93,6 +93,6 @@ class BarangController extends Controller
         $barang->delete();
 
         // Redirect dengan pesan sukses
-        return redirect()->route('barang')->with('success', 'Data Barang berhasil dihapus.');
+        return redirect()->route('admin.barang')->with('success', 'Data Barang berhasil dihapus.');
     }
 }

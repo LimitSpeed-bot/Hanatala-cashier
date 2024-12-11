@@ -16,13 +16,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
     <link rel="stylesheet" href="{{ url('/dist/css/dataTables.dataTables.css') }}">
     <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.css" rel="stylesheet">
+    <link href="{{ asset('css/sb-admin-2.css') }}" rel="stylesheet">
+
 
 </head>
 
@@ -31,10 +32,8 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-            <!-- Sidebar - Brand -->
             <div class="sidebar-brand d-flex align-items-center justify-content-center">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="bi bi-flower2"></i>
@@ -42,62 +41,54 @@
                 <div class="sidebar-brand-text mx-3">Hanatala</div>
             </div>
 
-            <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('/') }}">
+                <a class="nav-link" href="{{url('/index')}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
 
-            <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Interface
-            </div>
+            <div class="sidebar-heading">Interface</div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item active">
-                <a class="nav-link collapsed" href="{{ url('/kategori') }}">
+            <li class="nav-item">
+                <a class="nav-link" href="{{url('/admin/kategori')}}">
                     <i class="bi bi-boxes"></i>
                     <span>Kategori</span>
                 </a>
             </li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ url('/barang') }}">
+                <a class="nav-link" href="{{url('/admin/barang')}}">
                     <i class="bi bi-box"></i>
                     <span>Barang</span>
                 </a>
             </li>
+
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ url('/pelanggan') }}">
+                <a class="nav-link" href="{{url('/admin/pelanggan')}}">
                     <i class="bi bi-file-person-fill"></i>
                     <span>Pelanggan</span>
                 </a>
             </li>
+
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ url('/kasir') }}">
+                <a class="nav-link" href="{{url('/admin/kasir')}}">
                     <i class="bi bi-calculator"></i>
                     <span>Kasir</span>
                 </a>
             </li>
+
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ url('/transaksi') }}">
+                <a class="nav-link" href="{{url('/admin/transaksi')}}">
                     <i class="bi bi-wallet2"></i>
                     <span>Transaksi</span>
                 </a>
             </li>
-
-
-
-
         </ul>
+
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -194,7 +185,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
-                                <form action="{{ route('kategori.store') }}" method="POST">
+                                <form action="{{ route('admin.kategori.store') }}" method="POST">
                                     @csrf
                                     <div class="modal-body">
                                         <div class="mb-3">
@@ -233,7 +224,7 @@
                                                 data-bs-target="#editModal{{ $kategoris->id }}">
                                                 Edit
                                             </button>
-                                            <form action="{{ route('kategori.destroy', $kategoris->id) }}"
+                                            <form action="{{ route('admin.kategori.destroy', $kategoris->id) }}"
                                                 method="post">
                                                 @method('delete')
                                                 @csrf
@@ -254,7 +245,7 @@
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="{{ route('kategori.update', $kategoris->id) }}"
+                                                <form action="{{ route('admin.kategori.update', $kategoris->id) }}"
                                                     method="POST">
                                                     @method('put')
                                                     @csrf

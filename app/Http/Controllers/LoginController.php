@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kategori;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class KategoriController extends Controller
+class LoginController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $kategori=Kategori::all();
-        return view('kategori', compact('kategori'));
+        return view('user.login');
     }
 
     /**
@@ -29,8 +28,21 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
-        Kategori::create($request->all());
-        return redirect()->route('admin.kategori')->with('Data masuk');
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+
+        $data = [
+            'email' => $request->email,
+            'password' => $request->password,
+        ];
+
+        if(Auth::attempt($data)){
+            return redirect()->route('index');
+        }else{
+            return redirect()->route('login')->with('failed','Email atau Password Salah');
+        };
     }
 
     /**
@@ -52,11 +64,10 @@ class KategoriController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        $kategori = Kategori::find($id);
-        $kategori->update($request->all());
-        return redirect()->route('admin.kategori')->with('berhasil di edit');
+        Auth::logout();
+        return redirect()->route('login')->with('success', 'Kamu berhasil Logout');
     }
 
     /**
@@ -64,8 +75,6 @@ class KategoriController extends Controller
      */
     public function destroy(string $id)
     {
-        $kategori = Kategori::find($id);
-        $kategori->delete();
-        return redirect()->route('admin.kategori')->with('Data Dihapus');
+        //
     }
 }
