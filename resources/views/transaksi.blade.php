@@ -14,6 +14,8 @@
     <title>Hanatala</title>
 
     <!-- Custom fonts for this template-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -270,6 +272,8 @@
                 <!-- Page level custom scripts -->
                 <script src="js/demo/chart-area-demo.js"></script>
                 <script src="js/demo/chart-pie-demo.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
                     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
@@ -286,45 +290,72 @@
                         });
 
                         // Load barang dan tambahkan ke tabel
+                        // Load barang dan tambahkan ke tabel
                         $('#add-barang').click(function() {
                             $.get('{{ route('admin.transaksi.barang') }}', function(data) {
-                                barangList = data;
+                                let barangList = data;
                                 let options = barangList.map(b =>
-                                    `<option value="${b.id}">${b.nama_barang} - Rp ${b.harga}</option>`
+                                    `<option value="${b.id}" data-harga="${b.harga}">${b.nama_barang} - Rp ${b.harga}</option>`
                                 );
                                 let row = `
-                            <tr>
-                                <td>
-                                    <select class="form-select barang-select">${options.join('')}</select>
-                                </td>
-                                <td class="harga">0</td>
-                                <td>
-                                    <input type="number" class="form-control qty" min="1" value="1">
-                                </td>
-                                <td class="subtotal">0</td>
-                                <td>
-                                    <button type="button" class="btn btn-danger remove-barang">Hapus</button>
-                                </td>
-                            </tr>`;
+        <tr>
+            <td>
+                <select class="form-select barang-select">
+                    <option value="">Pilih Barang</option>
+                    ${options.join('')}
+                </select>
+            </td>
+            <td class="harga">0</td>
+            <td>
+                <input type="number" class="form-control qty" min="1" value="1">
+            </td>
+            <td class="subtotal">0</td>
+            <td>
+                <button type="button" class="btn btn-danger remove-barang">Hapus</button>
+            </td>
+        </tr>`;
                                 $('#barang-table tbody').append(row);
+
+                                // Inisialisasi Select2 pada dropdown yang baru ditambahkan
+                                $('.barang-select').last().select2({
+                                    placeholder: "Cari barang",
+                                    allowClear: true,
+                                    width: '100%'
+                                });
+
+                                // Event listener untuk barang-select (pembaharuan harga dan subtotal)
+                                $('.barang-select').last().on('change', function() {
+                                    let harga = $(this).find(':selected').data('harga') ||
+                                    0; // Ambil harga dari data-harga
+                                    let qty = $(this).closest('tr').find('.qty')
+                                .val(); // Ambil quantity
+                                    let subtotal = harga * qty; // Hitung subtotal
+
+                                    // Update kolom harga dan subtotal
+                                    $(this).closest('tr').find('.harga').text(`Rp ${harga}`);
+                                    $(this).closest('tr').find('.subtotal').text(`Rp ${subtotal}`);
+
+                                    // Hitung total transaksi setelah perubahan
+                                    calculateTotal();
+                                });
+
+                                // Event listener untuk qty (pembaharuan subtotal)
+                                $('.qty').last().on('input', function() {
+                                    let qty = $(this).val(); // Ambil quantity
+                                    let harga = $(this).closest('tr').find('.barang-select :selected')
+                                        .data('harga') || 0; // Ambil harga dari data-harga
+                                    let subtotal = harga * qty; // Hitung subtotal
+
+                                    // Update kolom subtotal
+                                    $(this).closest('tr').find('.subtotal').text(`Rp ${subtotal}`);
+
+                                    // Hitung total transaksi setelah perubahan
+                                    calculateTotal();
+                                });
+
                             }).fail(function() {
                                 alert('Gagal memuat data barang. Silakan coba lagi.');
                             });
-                        });
-
-                        // Update harga dan subtotal saat barang atau jumlah berubah
-                        $(document).on('change', '.barang-select, .qty', function() {
-                            let row = $(this).closest('tr');
-                            let barangId = row.find('.barang-select').val();
-                            let barang = barangList.find(b => b.id == barangId);
-                            if (barang) {
-                                let qty = parseInt(row.find('.qty').val()) || 0;
-                                let subtotal = barang.harga * qty;
-
-                                row.find('.harga').text(barang.harga);
-                                row.find('.subtotal').text(subtotal);
-                                calculateTotal();
-                            }
                         });
 
                         // Hapus barang dari tabel
@@ -333,25 +364,36 @@
                             calculateTotal();
                         });
 
-                        // Hitung total transaksi
+                        // Fungsi untuk menghitung total transaksi
                         function calculateTotal() {
                             let total = 0;
+
+                            // Iterasi setiap baris untuk menghitung total subtotal
                             $('#barang-table tbody tr').each(function() {
-                                total += parseFloat($(this).find('.subtotal').text()) || 0;
+                                let subtotalText = $(this).find('.subtotal').text().replace(/[^\d]/g,
+                                ''); // Hapus semua karakter kecuali angka
+                                let subtotal = parseFloat(subtotalText) || 0; // Mengonversi subtotal ke angka
+                                total += subtotal; // Tambahkan subtotal ke total
                             });
+
+                            // Log untuk debugging
+                            console.log('Total dihitung:', total);
+
+                            // Tampilkan total dalam input #total (tanpa format)
                             $('#total').val(total);
 
                             // Perbarui nilai kembalian jika dibayar sudah terisi
                             updateKembalian();
                         }
 
-                        // Perbarui kembalian secara real-time
+                        // Fungsi untuk memperbarui kembalian secara real-time
                         $('#dibayar').on('input', function() {
                             updateKembalian();
                         });
 
+                        // Fungsi untuk menghitung kembalian
                         function updateKembalian() {
-                            let total = parseFloat($('#total').val()) || 0;
+                            let total = parseFloat($('#total').val().replace('Rp', '').replace(',', '').trim()) || 0;
                             let dibayar = parseFloat($('#dibayar').val()) || 0;
                             let kembalian = dibayar - total;
 
@@ -368,7 +410,9 @@
                                 let row = $(this);
                                 let barangId = row.find('.barang-select').val();
                                 let qty = parseInt(row.find('.qty').val());
-                                let harga = parseFloat(row.find('.harga').text());
+                                let harga = parseFloat(row.find('.harga').text().replace('Rp', '').replace(',',
+                                    '').trim());
+
                                 if (barangId && qty > 0 && harga > 0) {
                                     details.push({
                                         barang_id: barangId,
@@ -383,7 +427,7 @@
                                 return;
                             }
 
-                            let total = parseFloat($('#total').val()) || 0;
+                            let total = parseFloat($('#total').val().replace('Rp', '').replace(',', '').trim()) || 0;
                             let dibayar = parseFloat($('#dibayar').val()) || 0;
                             let kembalian = dibayar - total;
 
@@ -402,6 +446,7 @@
                                 details: details
                             };
 
+                            // Mengirim data transaksi menggunakan AJAX
                             $.ajax({
                                 url: '{{ route('admin.transaksi.store') }}',
                                 type: 'POST',
@@ -417,6 +462,35 @@
                                         'Periksa kembali data Anda.'));
                                 }
                             });
+                        });
+
+                        // Fungsi untuk menghitung harga dan subtotal setiap kali barang dipilih atau quantity diubah
+                        $(document).on('change', '.barang-select', function() {
+                            let row = $(this).closest('tr');
+                            let harga = $(this).find(':selected').data('harga') || 0;
+                            let qty = row.find('.qty').val();
+                            let subtotal = harga * qty;
+
+                            // Update harga dan subtotal di baris yang sesuai
+                            row.find('.harga').text('Rp ' + harga);
+                            row.find('.subtotal').text('Rp ' + subtotal);
+
+                            // Hitung total transaksi setelah perubahan
+                            calculateTotal();
+                        });
+
+                        // Ketika quantity diubah, perbarui subtotal dan total transaksi
+                        $(document).on('input', '.qty', function() {
+                            let row = $(this).closest('tr');
+                            let harga = row.find('.barang-select').find(':selected').data('harga') || 0;
+                            let qty = $(this).val();
+                            let subtotal = harga * qty;
+
+                            // Update subtotal di baris yang sesuai
+                            row.find('.subtotal').text('Rp ' + subtotal);
+
+                            // Hitung total transaksi setelah perubahan
+                            calculateTotal();
                         });
                     });
                 </script>

@@ -92,6 +92,10 @@
             <td>Kembalian:</td>
             <td class="text-right">{{ number_format($transaksi->kembalian, 0, ',', '.') }}</td>
         </tr>
+        <tr>
+            <td>Keterangan:</td>
+            <td class="text-right">{{$transaksi->keterangan }}</td>
+        </tr>
     </table>
 
     <p class="text-center">===================================</p>

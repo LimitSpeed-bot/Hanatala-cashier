@@ -17,6 +17,7 @@
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
+        <link rel="stylesheet" href="{{ url('/dist/css/dataTables.dataTables.css') }}">
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin-2.css') }}" rel="stylesheet">
@@ -384,7 +385,7 @@
                     <h2>Riwayat Transaksi</h2>
                     <!-- End of Main Content -->
                     <div class="container">
-                        <table class="table table-bordered">
+                        <table class="table" id="myTable">
                             <thead>
                                 <tr>
                                     <th>ID Transaksi</th>
@@ -502,6 +503,7 @@
             </div>
 
             <script src="{{ url('dist/js/jquery-3.7.1.js') }}"></script>
+            <script src="{{ url('dist/js/dataTables.js') }}"></script>
             <!-- Bootstrap core JavaScript-->
             <script src="vendor/jquery/jquery.min.js"></script>
             <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -524,6 +526,7 @@
             </script>
 
             <script>
+                new DataTable("#myTable");
                 function showDetails(transactionId) {
                     $.get('admin/index/api/transaction/' + transactionId, function(data) {
                         let rows = '';
