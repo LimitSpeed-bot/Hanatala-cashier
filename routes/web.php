@@ -47,9 +47,7 @@ Route::controller(LoginController::class)->prefix('login')->group(function () {
 // Rute dengan middleware auth
 Route::middleware(['auth'])->group(function () {
     // Dashboard
-    Route::get('/index', function () {
-        return view('index');
-    })->name('index');
+    Route::get('/index', [DashboardController::class, 'index'])->name('index');
 
     // Rute untuk admin
     Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
@@ -86,9 +84,10 @@ Route::middleware(['auth'])->group(function () {
         });
 
         Route::controller(DashboardController::class)->prefix('index')->group(function () {
-            Route::get('report/cetak', 'cetak')->name('report.cetak');
+            Route::get('report/cetak/{id}', 'cetak')->name('report.cetak');
             Route::get('api/transaction/{id}', 'getTransactionDetails')->name('transaction.details');
             Route::delete('transaction/{id}', 'destroy')->name('transaction.destroy');
+
         });
 
     });

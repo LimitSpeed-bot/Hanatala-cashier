@@ -389,6 +389,7 @@
                                 <tr>
                                     <th>ID Transaksi</th>
                                     <th>Tanggal Jual</th>
+                                    <th>Pelanggan</th>
                                     <th>Total</th>
                                     <th>Detail Barang</th>
                                 </tr>
@@ -396,12 +397,25 @@
                             <tbody>
                                 @foreach ($transaksi as $t)
                                     <tr>
-                                        <td>{{ $t->id }}</td>
+                                        <td>{{ $loop->iteration }}</td>
                                         <td>{{ $t->tanggal_jual }}</td>
+                                        <td>{{ $t->pelanggan->nama_pelanggan }}</td>
                                         <td>Rp {{ number_format($t->total, 0, ',', '.') }}</td>
                                         <td>
                                             <button class="btn btn-primary btn-sm"
                                                 onclick="showDetails({{ $t->id }})">Show</button>
+
+                                            <form onclick="return confirm('Are you sure?')" class="d-inline"
+                                                action="{{ route('admin.transaction.destroy', $t->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('delete')
+                                                <button class="btn btn-danger"
+                                                    style="border-top-left-radius: 0;border-bottom-left-radius: 0;">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </form>
+
                                         </td>
                                     </tr>
                                 @endforeach
@@ -429,9 +443,12 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <!-- Detail transaksi akan dimuat di sini -->
+                                                <!-- Detail transaksi dimuat melalui AJAX -->
                                             </tbody>
                                         </table>
+                                        <a href="{{ route('admin.report.cetak', ['id' => $t->id]) }}"
+                                            class="btn btn-success mb-3"
+                                            target="_blank">Print</a>
                                     </div>
                                 </div>
                             </div>
@@ -474,7 +491,11 @@
                         </div>
                         <div class="modal-footer">
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <a class="btn btn-primary" href="{{ route('logout') }}">Logout</a>
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button class="btn btn-primary" type="submit">Logout</button>
+                            </form>
+
                         </div>
                     </div>
                 </div>
@@ -503,7 +524,7 @@
 
             <script>
                 function showDetails(transactionId) {
-                    $.get('/api/transaction/' + transactionId, function(data) {
+                    $.get('admin/index/api/transaction/' + transactionId, function(data) {
                         let rows = '';
                         data.details.forEach(detail => {
                             rows += `
@@ -512,10 +533,6 @@
                         <td>Rp ${detail.harga}</td>
                         <td>${detail.qty}</td>
                         <td>Rp ${detail.qty * detail.harga}</td>
-                        <td>
-                            <button class="btn btn-danger btn-sm" onclick="deleteDetail(${detail.id})">Hapus</button>
-                            <a href="{{ route('report.cetak') }}" class="btn btn-success mb-3" target="_blank">Cetak Laporan</a>
-                        </td>
                     </tr>`;
                         });
                         $('#details-table tbody').html(rows);
@@ -528,13 +545,17 @@
                         $.ajax({
                             url: '/report/destroy/' + detailId,
                             type: 'DELETE',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Tambahkan CSRF token
+                            },
                             success: function(response) {
                                 alert(response.message);
                                 $('#details-modal').modal('hide');
                                 location.reload();
                             },
                             error: function(xhr) {
-                                alert('Terjadi kesalahan: ' + xhr.responseJSON.message);
+                                let errorMessage = xhr.responseJSON?.message || 'Terjadi kesalahan.';
+                                alert('Terjadi kesalahan: ' + errorMessage);
                             }
                         });
                     }

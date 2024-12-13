@@ -64,10 +64,10 @@ class LoginController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function logout()
     {
-        Auth::logout();
-        return redirect()->route('login')->with('success', 'Kamu berhasil Logout');
+        Auth::logout(); // Keluar dari sesi pengguna
+        return redirect()->route('login')->with('success', 'Kamu berhasil Logout'); // Mengarahkan pengguna ke halaman login setelah logout
     }
 
     /**
