@@ -189,10 +189,11 @@
                                     @csrf
                                     <div class="modal-body">
                                         <div class="mb-3">
-                                            <label for="exampleFormControlInput1" class="form-label">Nama
-                                                Kategori</label>
-                                            <input type="text" class="form-control"
-                                                id="nama_kategori"placeholder="Bunga" name="nama_kategori">
+                                            <label for="nama_kategori">Nama Kategori</label>
+                                            <input type="text" name="nama_kategori" id="nama_kategori" class="form-control" value="{{ old('nama_kategori') }}">
+                                            @error('nama_kategori')
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -294,6 +295,7 @@
                 </div>
                 <script src="{{ url('dist/js/jquery-3.7.1.js') }}"></script>
                 <script src="{{ url('dist/js/dataTables.js') }}"></script>
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
                     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
                 </script>

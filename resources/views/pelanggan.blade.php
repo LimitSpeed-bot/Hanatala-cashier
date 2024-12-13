@@ -16,7 +16,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
-        <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
@@ -43,7 +43,7 @@
             <hr class="sidebar-divider my-0">
 
             <li class="nav-item">
-                <a class="nav-link" href="{{url('/index')}}">
+                <a class="nav-link" href="{{ url('/index') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -53,35 +53,35 @@
             <div class="sidebar-heading">Interface</div>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{url('/admin/kategori')}}">
+                <a class="nav-link" href="{{ url('/admin/kategori') }}">
                     <i class="bi bi-boxes"></i>
                     <span>Kategori</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{url('/admin/barang')}}">
+                <a class="nav-link" href="{{ url('/admin/barang') }}">
                     <i class="bi bi-box"></i>
                     <span>Barang</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{url('/admin/pelanggan')}}">
+                <a class="nav-link" href="{{ url('/admin/pelanggan') }}">
                     <i class="bi bi-file-person-fill"></i>
                     <span>Pelanggan</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{url('/admin/kasir')}}">
+                <a class="nav-link" href="{{ url('/admin/kasir') }}">
                     <i class="bi bi-calculator"></i>
                     <span>Kasir</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{url('/admin/transaksi')}}">
+                <a class="nav-link" href="{{ url('/admin/transaksi') }}">
                     <i class="bi bi-wallet2"></i>
                     <span>Transaksi</span>
                 </a>
@@ -232,13 +232,17 @@
                                     <td>{{ $pelanggans->no_hp }}</td>
                                     <td>{{ $pelanggans->alamat }}</td>
                                     <td>
-                                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                        <div class="btn-group" role="group"
+                                            aria-label="Basic mixed styles example">
                                             <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                                                 data-bs-target="#editModal{{ $pelanggans->id }}">Edit</button>
-                                            <form action="{{ route('admin.pelanggan.destroy', $pelanggans->id) }}" method="POST" style="display:inline;">
+                                            <form id="delete-form-{{ $pelanggans->id }}"
+                                                action="{{ route('admin.pelanggan.destroy', $pelanggans->id) }}"
+                                                method="POST" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">Hapus</button>
+                                                <button type="button" class="btn btn-danger delete-button"
+                                                    data-id="{{ $pelanggans->id }}">Hapus</button>
                                             </form>
                                         </div>
                                     </td>
@@ -250,32 +254,42 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="editModalLabel{{ $pelanggans->id }}">Edit Pelanggan {{ $pelanggans->id }}</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                <h1 class="modal-title fs-5"
+                                                    id="editModalLabel{{ $pelanggans->id }}">Edit Pelanggan
+                                                    {{ $pelanggans->id }}</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
                                             </div>
-                                            <form action="{{ route('admin.pelanggan.update', $pelanggans->id) }}" method="POST">
+                                            <form action="{{ route('admin.pelanggan.update', $pelanggans->id) }}"
+                                                method="POST">
                                                 @method('PUT')
                                                 @csrf
                                                 <div class="modal-body">
                                                     <div class="mb-3">
-                                                        <label for="nama_pelanggan{{ $pelanggans->id }}" class="form-label">Nama Pelanggan</label>
-                                                        <input type="text" class="form-control" id="nama_pelanggan{{ $pelanggans->id }}"
+                                                        <label for="nama_pelanggan{{ $pelanggans->id }}"
+                                                            class="form-label">Nama Pelanggan</label>
+                                                        <input type="text" class="form-control"
+                                                            id="nama_pelanggan{{ $pelanggans->id }}"
                                                             name="nama_pelanggan" placeholder="namamu"
                                                             value="{{ old('nama_pelanggan', $pelanggans->nama_pelanggan) }}">
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label for="no_hp{{ $pelanggans->id }}" class="form-label">No HP</label>
-                                                        <input type="number" class="form-control" id="no_hp{{ $pelanggans->id }}"
-                                                            name="no_hp" placeholder="0123456789101"
+                                                        <label for="no_hp{{ $pelanggans->id }}" class="form-label">No
+                                                            HP</label>
+                                                        <input type="number" class="form-control"
+                                                            id="no_hp{{ $pelanggans->id }}" name="no_hp"
+                                                            placeholder="0123456789101"
                                                             value="{{ old('no_hp', $pelanggans->no_hp) }}">
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label for="alamat{{ $pelanggans->id }}" class="form-label">Alamat</label>
+                                                        <label for="alamat{{ $pelanggans->id }}"
+                                                            class="form-label">Alamat</label>
                                                         <textarea class="form-control" id="alamat{{ $pelanggans->id }}" name="alamat" placeholder="alamat">{{ old('alamat', $pelanggans->alamat) }}</textarea>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Kembali</button>
                                                     <button type="submit" class="btn btn-primary">Simpan</button>
                                                 </div>
                                             </form>
@@ -327,8 +341,33 @@
                 <!-- Page level custom scripts -->
                 <script src="js/demo/chart-area-demo.js"></script>
                 <script src="js/demo/chart-pie-demo.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                 <script>
                     new DataTable('#myTable');
+                    document.addEventListener("DOMContentLoaded", function () {
+    const deleteButtons = document.querySelectorAll(".delete-button");
+
+    deleteButtons.forEach(button => {
+        button.addEventListener("click", function () {
+            const formId = this.getAttribute("data-id");
+            Swal.fire({
+                title: "Kamu yakin ingin?",
+                text: "Kamu tidak akan bisa mengembalikan data",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Hapus"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Submit the associated form
+                    document.getElementById(`delete-form-${formId}`).submit();
+                }
+            });
+        });
+    });
+});
+
                 </script>
 </body>
 

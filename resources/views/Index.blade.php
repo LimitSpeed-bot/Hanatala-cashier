@@ -291,7 +291,7 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                        <a href="{{route('admin.print')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                     </div>
 
@@ -518,6 +518,7 @@
             <!-- Page level custom scripts -->
             <script src="js/demo/chart-area-demo.js"></script>
             <script src="js/demo/chart-pie-demo.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
             </script>
@@ -540,26 +541,7 @@
                     });
                 }
 
-                function deleteDetail(detailId) {
-                    if (confirm('Apakah Anda yakin ingin menghapus item ini?')) {
-                        $.ajax({
-                            url: '/report/destroy/' + detailId,
-                            type: 'DELETE',
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Tambahkan CSRF token
-                            },
-                            success: function(response) {
-                                alert(response.message);
-                                $('#details-modal').modal('hide');
-                                location.reload();
-                            },
-                            error: function(xhr) {
-                                let errorMessage = xhr.responseJSON?.message || 'Terjadi kesalahan.';
-                                alert('Terjadi kesalahan: ' + errorMessage);
-                            }
-                        });
-                    }
-                }
+
             </script>
 </body>
 

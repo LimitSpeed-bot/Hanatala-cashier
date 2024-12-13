@@ -87,7 +87,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('report/cetak/{id}', 'cetak')->name('report.cetak');
             Route::get('api/transaction/{id}', 'getTransactionDetails')->name('transaction.details');
             Route::delete('transaction/{id}', 'destroy')->name('transaction.destroy');
-
+            Route::get('report/print', 'print')->name('print');
         });
 
     });

@@ -40,14 +40,16 @@ class DashboardController extends Controller
 
     public function print()
     {
+        // Ambil semua transaksi dengan detail barang
         $transaksi = Transaksi::with('details.barang')->get();
 
-        // Load tampilan PDF
-        $pdf = \PDF::loadView('cetak', compact('transaksi'));
+        // Generate PDF menggunakan view 'cetak'
+        $pdf = \PDF::loadView('report', compact('transaksi'));
 
-        // Unduh atau tampilkan file PDF
+        // Tampilkan atau unduh file PDF
         return $pdf->stream('laporan_transaksi.pdf');
     }
+
     public function cetak($id)
     {
         $transaksi = Transaksi::with('details.barang')->findOrFail($id);

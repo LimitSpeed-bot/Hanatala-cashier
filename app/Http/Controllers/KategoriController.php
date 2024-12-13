@@ -29,8 +29,14 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
-        Kategori::create($request->all());
+        $validated = $request->validate([
+            'nama_kategori' => 'required|string|max:255|unique:kategoris,nama_kategori',
+        ]);
+        Kategori::create($validated);
+        return redirect()->back()->withErrors($validated)->withInput();
         return redirect()->route('admin.kategori')->with('Data masuk');
+        $request->validate(Kategori::rules());
+
     }
 
     /**
