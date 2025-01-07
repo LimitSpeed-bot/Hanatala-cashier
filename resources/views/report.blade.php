@@ -14,9 +14,15 @@
             </tr>
         </thead>
         <tbody>
-            @php $no = 1; @endphp
+            @php
+                $no = 1;
+                $grandTotal = 0;
+            @endphp
             @foreach ($transaksi as $t)
-                @php $rowspan = $t->details->count(); @endphp
+                @php
+                    $rowspan = $t->details->count();
+                    $grandTotal += $t->total;
+                @endphp
                 <tr>
                     <td rowspan="{{ $rowspan }}">{{ $no++ }}</td>
                     <td rowspan="{{ $rowspan }}">{{ $t->tanggal_jual }}</td>
@@ -38,5 +44,11 @@
                 @endfor
             @endforeach
         </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6" style="text-align: right; font-weight: bold;">Total Keseluruhan</td>
+                <td style="font-weight: bold;">Rp {{ number_format($grandTotal, 0, ',', '.') }}</td>
+            </tr>
+        </tfoot>
     </table>
 </body>

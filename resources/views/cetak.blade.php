@@ -14,7 +14,7 @@
 
         p {
             display: block;
-            margin: 3px;
+            margin: 1px;
             font-size: 10pt;
         }
 
@@ -33,12 +33,12 @@
         @media print {
             @page {
                 margin: 0;
-                size: 75mm;
+                size: 100mm;
             }
 
             html,
             body {
-                width: 70mm;
+                width: 100mm;
             }
 
             .btn-print {
@@ -72,7 +72,7 @@
                 <td>{{ $transaction_detail->qty }} x {{ number_format($transaction_detail->harga, 0, ',', '.') }}</td>
                 <td></td>
                 <td class="text-right">
-                    {{ number_format($transaction_detail->qty * $transaction_detail->harga, 0, ',', '.') }}</td>
+                    Rp{{ number_format($transaction_detail->qty * $transaction_detail->harga, 0, ',', '.') }}</td>
             </tr>
         @endforeach
     </table>
@@ -82,15 +82,15 @@
     <table width="100%" style="border: 0;">
         <tr>
             <td>Total Harga:</td>
-            <td class="text-right">{{ number_format($transaksi->total, 0, ',', '.') }}</td>
+            <td class="text-right">Rp{{ number_format($transaksi->total, 0, ',', '.') }}</td>
         </tr>
         <tr>
             <td>Bayar:</td>
-            <td class="text-right">{{ number_format($transaksi->dibayar, 0, ',', '.') }}</td>
+            <td class="text-right">Rp{{ number_format($transaksi->dibayar, 0, ',', '.') }}</td>
         </tr>
         <tr>
             <td>Kembalian:</td>
-            <td class="text-right">{{ number_format($transaksi->kembalian, 0, ',', '.') }}</td>
+            <td class="text-right">Rp{{ number_format($transaksi->kembalian, 0, ',', '.') }}</td>
         </tr>
         <tr>
             <td>Keterangan:</td>

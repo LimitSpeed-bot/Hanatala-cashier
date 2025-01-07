@@ -12,7 +12,7 @@ class KategoriController extends Controller
      */
     public function index()
     {
-        $kategori=Kategori::all();
+        $kategori = Kategori::all();
         return view('kategori', compact('kategori'));
     }
 
@@ -36,7 +36,6 @@ class KategoriController extends Controller
         return redirect()->back()->withErrors($validated)->withInput();
         return redirect()->route('admin.kategori')->with('Data masuk');
         $request->validate(Kategori::rules());
-
     }
 
     /**
@@ -71,7 +70,12 @@ class KategoriController extends Controller
     public function destroy(string $id)
     {
         $kategori = Kategori::find($id);
+
+        if ($kategori->barang()->count() > 0) {
+            return redirect()->route('admin.kategori')->with('error', 'Kategori tidak dapat dihapus karena masih digunakan oleh barang.');
+        }
+
         $kategori->delete();
-        return redirect()->route('admin.kategori')->with('Data Dihapus');
+        return redirect()->route('admin.kategori')->with('success', 'Kategori berhasil dihapus.');
     }
 }

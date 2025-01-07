@@ -17,7 +17,7 @@
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-        <link rel="stylesheet" href="{{ url('/dist/css/dataTables.dataTables.css') }}">
+    <link rel="stylesheet" href="{{ url('/dist/css/dataTables.dataTables.css') }}">
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin-2.css') }}" rel="stylesheet">
@@ -292,8 +292,56 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                        <a href="{{route('admin.print')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                        <!-- Tombol untuk membuka modal -->
+                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                            data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <i class="fas fa-download fa-sm text-white-50"></i> Buat Laporan
+                        </a>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Buat Laporan Transaksi
+                                        </h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="{{ route('admin.print') }}" method="GET" target="_blank">
+                                            @csrf
+                                            <div class="mb-3">
+                                                <label for="tanggal" class="form-label">Tanggal:</label>
+                                                <input type="date" name="tanggal" id="tanggal"
+                                                    class="form-control" onchange="toggleInputs('tanggal')">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="bulan" class="form-label">Bulan:</label>
+                                                <input type="month" name="bulan" id="bulan"
+                                                    class="form-control" onchange="toggleInputs('bulan')">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="tahun" class="form-label">Tahun:</label>
+                                                <input type="number" name="tahun" id="tahun"
+                                                    class="form-control" placeholder="YYYY" min="2020"
+                                                    max="{{ date('Y') }}" onchange="toggleInputs('tahun')">
+                                            </div>
+
+                                            <button type="submit" class="btn btn-primary">Buat Laporan</button>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Kembali</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                     <!-- Content Row -->
@@ -307,7 +355,8 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Earnings (Monthly)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Rp
+                                                {{ number_format($month, 0, ',', '.') }}</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -325,7 +374,8 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Earnings (Annual)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"> Rp
+                                                {{ number_format($year, 0, ',', '.') }}</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -440,16 +490,14 @@
                                                     <th>Harga</th>
                                                     <th>Jumlah</th>
                                                     <th>Subtotal</th>
-                                                    <th>Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <!-- Detail transaksi dimuat melalui AJAX -->
                                             </tbody>
                                         </table>
-                                        <a href="{{ route('admin.report.cetak', ['id' => $t->id]) }}"
-                                            class="btn btn-success mb-3"
-                                            target="_blank">Print</a>
+                                        <a href="#" class="btn btn-success mb-3" target="_blank"
+                                            id="print-btn">Print</a>
                                     </div>
                                 </div>
                             </div>
@@ -527,24 +575,67 @@
 
             <script>
                 new DataTable("#myTable");
+
                 function showDetails(transactionId) {
                     $.get('admin/index/api/transaction/' + transactionId, function(data) {
                         let rows = '';
                         data.details.forEach(detail => {
                             rows += `
-                    <tr>
-                        <td>${detail.barang.nama_barang}</td>
-                        <td>Rp ${detail.harga}</td>
-                        <td>${detail.qty}</td>
-                        <td>Rp ${detail.qty * detail.harga}</td>
-                    </tr>`;
+            <tr>
+                <td>${detail.barang.nama_barang}</td>
+                <td>Rp ${detail.harga}</td>
+                <td>${detail.qty}</td>
+                <td>Rp ${detail.qty * detail.harga}</td>
+            </tr>`;
                         });
+
+                        // Tampilkan data di tabel
                         $('#details-table tbody').html(rows);
+
+                        // Update href tombol Print
+                        $('#print-btn').attr('href', `admin/index/report/cetak/${transactionId}`);
+
+                        // Tampilkan modal
                         $('#details-modal').modal('show');
                     });
                 }
 
+                function toggleInputs() {
+                    var tanggal = document.getElementById('tanggal');
+                    var bulan = document.getElementById('bulan');
+                    var tahun = document.getElementById('tahun');
 
+                    // Reset semua input menjadi aktif
+                    tanggal.disabled = false;
+                    bulan.disabled = false;
+                    tahun.disabled = false;
+
+                    // Nonaktifkan input lain yang tidak dipilih
+                    if (tanggal.value !== '') {
+                        bulan.disabled = true;
+                        tahun.disabled = true;
+                    } else if (bulan.value !== '') {
+                        tanggal.disabled = true;
+                        tahun.disabled = true;
+                    } else if (tahun.value !== '') {
+                        tanggal.disabled = true;
+                        bulan.disabled = true;
+                    }
+                }
+
+                // Fungsi untuk mengaktifkan kembali input jika ada yang dikosongkan
+                function resetOnClear() {
+                    var tanggal = document.getElementById('tanggal');
+                    var bulan = document.getElementById('bulan');
+                    var tahun = document.getElementById('tahun');
+
+                    // Jika salah satu input dikosongkan, reset semua input untuk aktif
+                    if (tanggal.value === '' && bulan.value === '' && tahun.value === '') {
+                        tanggal.disabled = false;
+                        bulan.disabled = false;
+                        tahun.disabled = false;
+                    }
+                }
             </script>
 </body>
 

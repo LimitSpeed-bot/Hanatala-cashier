@@ -338,6 +338,10 @@
 
                 <!-- Page level plugins -->
                 <script src="vendor/chart.js/Chart.min.js"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
                 <!-- Page level custom scripts -->
                 <script src="js/demo/chart-area-demo.js"></script>

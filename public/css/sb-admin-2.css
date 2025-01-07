@@ -11297,3 +11297,24 @@ body.sidebar-toggled footer.sticky-footer {
 .section-tabel{
   margin: 0 30px;
 }
+
+.payment
+{
+    margin-top: 2rem;}
+
+    .kembali{
+        margin-top: 3rem;
+    }
+
+    .pelanggan{
+        display: flex;
+        justify-content: space-between;
+    }
+.ket
+{
+    width: 46%;
+
+}
+.dropdown.no-arrow .dropdown-toggle::after {
+    display: none;
+  }

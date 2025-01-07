@@ -12,6 +12,17 @@
 
 
     <title>Hanatala</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{{ url('/dist/css/dataTables.dataTables.css') }}">
+    <!-- Custom styles for this template-->
+    <link href="{{ asset('css/sb-admin-2.css') }}" rel="stylesheet">
 
     <!-- Custom fonts for this template-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
@@ -119,19 +130,7 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small"
-                                placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -181,7 +180,6 @@
                                 </a>
                             </div>
                         </li>
-
                     </ul>
 
                 </nav>
@@ -193,17 +191,21 @@
                             <input type="date" class="form-control" id="tanggal_jual" name="tanggal_jual"
                                 required>
                         </div>
-                        <div class="mb-3">
+                        <div class="pelanggan">
+                        <div class="mb-3 ket">
                             <label for="keterangan" class="form-label">Keterangan</label>
                             <input type="text" class="form-control" id="keterangan" name="keterangan">
                         </div>
-                        <select id="pelanggan_id" class="form-select" required>
-                            <option value="">Pilih Pelanggan</option>
-                            @foreach ($pelanggan as $p)
+                        <div class="mb-3 ket">
+                            <label for="pelangan" class="form-label">Nama Pelanggan</label>
+                            <select id="pelanggan_id" class="form-select" required>
+                                <option value="">Pilih Pelanggan</option>
+                                @foreach ($pelanggan as $p)
                                 <option value="{{ $p->id }}">{{ $p->nama_pelanggan }}</option>
-                            @endforeach
-                        </select>
-
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                         <div class="mb-3">
                             <table id="barang-table" class="table">
                                 <thead>
@@ -219,42 +221,58 @@
                             </table>
                         </div>
                         <button type="button" id="add-barang" class="btn btn-primary">Tambah Barang</button>
-                        <div class="mb-3">
-                            <label for="total" class="form-label">Total</label>
-                            <input type="number" class="form-control" id="total" name="total" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label for="dibayar" class="form-label">Dibayar</label>
-                            <input type="number" class="form-control" id="dibayar" name="dibayar" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="kembalian" class="form-label">Kembalian</label>
-                            <input type="number" class="form-control" id="kembalian" name="kembalian" readonly>
-                        </div>
-                        <button type="submit" class="btn btn-success">Simpan</button>
+<div class="payment">
+
+                            <div class="row mb-3">
+                                <label for="total" class="col-sm-2 form-label">Total</label>
+                                <div class="col-sm-5">
+                                    <input type="number" class="form-control" id="total" name="total" readonly>
+                                </div>
+                              </div>
+                            <div class="row mb-3">
+                                <label for="dibayar" class="col-sm-2 form-label">Dibayar</label>
+                                <div class="col-sm-5">
+                                    <input type="number" class="form-control" id="dibayar" name="dibayar" required>
+                                </div>
+                              </div>
+
+                            </div>
+                            <div class="kembali float-end">
+                                <hr style="border: 1 px solid black;">
+
+                                <div class="row mb-3">
+                                    <label for="kembalian" class="col-sm-3 form-label">Kembalian</label>
+                                    <div class="col-sm-9">
+                                        <input type="number" class="form-control" id="kembalian" name="kembalian" readonly>
+                                    </div>
+                                    </div>
+                        <button type="submit" class="btn btn-success float-end">Simpan</button>
+                    </div>
+
                     </form>
                 </div>
 
                 <!-- Logout Modal-->
-                <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">Select "Logout" below if you are ready to end your current session.
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                <a class="btn btn-primary" href="{{ url('/login') }}">Logout</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                 <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                 <div class="modal-dialog" role="document">
+                     <div class="modal-content">
+                         <div class="modal-header">
+                             <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                 <span aria-hidden="true">×</span>
+                             </button>
+                         </div>
+                         <div class="modal-body">Select "Logout" below if you are ready to end your current session.
+                         </div>
+                         <div class="modal-footer">
+                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                             <a class="btn btn-primary" href="{{ url('/login') }}">Logout</a>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+
                 <script src="{{ url('dist/js/jquery-3.7.1.js') }}"></script>
                 <!-- Bootstrap core JavaScript-->
                 <script src="vendor/jquery/jquery.min.js"></script>
@@ -268,6 +286,11 @@
 
                 <!-- Page level plugins -->
                 <script src="vendor/chart.js/Chart.min.js"></script>
+
+                <!-- jQuery -->
+                <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+                <!-- Bootstrap JS -->
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
                 <!-- Page level custom scripts -->
                 <script src="js/demo/chart-area-demo.js"></script>
@@ -493,6 +516,8 @@
                             calculateTotal();
                         });
                     });
+
+
                 </script>
 
 

@@ -6,13 +6,23 @@ use App\Models\DetailTransaksi;
 use App\Models\Pelanggan;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
     public function index()
 {
+    $month = DB::table('transaksis')
+    ->whereMonth('tanggal_jual', date('m'))
+    ->whereYear('tanggal_jual', date('Y'))
+    ->sum('total');
+
+    $year = DB::table('transaksis')
+    ->whereYear('tanggal_jual', date('Y'))
+    ->sum('total');
+
     $transaksi = Transaksi::with(['details.barang', 'pelanggan'])->get();
-    return view('index', compact('transaksi'));
+    return view('index', compact('transaksi', 'year', 'month'));
 }
 
 
@@ -38,12 +48,29 @@ class DashboardController extends Controller
         return response()->json($transaksi);
     }
 
-    public function print()
+    public function print(Request $request)
     {
-        // Ambil semua transaksi dengan detail barang
-        $transaksi = Transaksi::with('details.barang')->get();
+        $query = Transaksi::query();
 
-        // Generate PDF menggunakan view 'cetak'
+        // Filter berdasarkan tanggal
+        if (!empty($request->tanggal)) {
+            $query->whereDate('tanggal_jual', $request->tanggal);
+        }
+
+        // Filter berdasarkan bulan
+        if (!empty($request->bulan)) {
+            $query->whereMonth('tanggal_jual', date('m', strtotime($request->bulan)))
+                  ->whereYear('tanggal_jual', date('Y', strtotime($request->bulan)));
+        }
+
+        // Filter berdasarkan tahun
+        if (!empty($request->tahun)) {
+            $query->whereYear('tanggal_jual', $request->tahun);
+        }
+
+        // Ambil data hasil filter
+        $transaksi = $query->with(['details.barang'])->get();
+
         $pdf = \PDF::loadView('report', compact('transaksi'));
 
         // Tampilkan atau unduh file PDF

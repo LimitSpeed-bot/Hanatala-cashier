@@ -16,7 +16,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
-    <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
@@ -44,7 +44,7 @@
             <hr class="sidebar-divider my-0">
 
             <li class="nav-item">
-                <a class="nav-link" href="{{url('/index')}}">
+                <a class="nav-link" href="{{ url('/index') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -54,35 +54,35 @@
             <div class="sidebar-heading">Interface</div>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{url('/admin/kategori')}}">
+                <a class="nav-link" href="{{ url('/admin/kategori') }}">
                     <i class="bi bi-boxes"></i>
                     <span>Kategori</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{url('/admin/barang')}}">
+                <a class="nav-link" href="{{ url('/admin/barang') }}">
                     <i class="bi bi-box"></i>
                     <span>Barang</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{url('/admin/pelanggan')}}">
+                <a class="nav-link" href="{{ url('/admin/pelanggan') }}">
                     <i class="bi bi-file-person-fill"></i>
                     <span>Pelanggan</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{url('/admin/kasir')}}">
+                <a class="nav-link" href="{{ url('/admin/kasir') }}">
                     <i class="bi bi-calculator"></i>
                     <span>Kasir</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{url('/admin/transaksi')}}">
+                <a class="nav-link" href="{{ url('/admin/transaksi') }}">
                     <i class="bi bi-wallet2"></i>
                     <span>Transaksi</span>
                 </a>
@@ -190,7 +190,8 @@
                                     <div class="modal-body">
                                         <div class="mb-3">
                                             <label for="nama_kategori">Nama Kategori</label>
-                                            <input type="text" name="nama_kategori" id="nama_kategori" class="form-control" value="{{ old('nama_kategori') }}">
+                                            <input type="text" name="nama_kategori" id="nama_kategori"
+                                                class="form-control">
                                             @error('nama_kategori')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
@@ -208,6 +209,17 @@
 
                     <table class="table tb" id="myTable">
                         <thead>
+                            @if (session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @endif
+
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                             <tr>
                                 <th scope="col">No</th>
                                 <th scope="col">Nama Kategori</th>
@@ -254,7 +266,7 @@
                                                         <label for="exampleFormControlInput1" class="form-label">Nama
                                                             Kategori</label>
                                                         <input type="text" class="form-control" id="nama_kategori"
-                                                            placeholder="Bunga" name="nama_kategori"
+                                                            name="nama_kategori"
                                                             value="{{ old('nama_kategori', $kategoris->nama_kategori) }}">
                                                     </div>
                                             </div>
@@ -302,6 +314,12 @@
                 <!-- Bootstrap core JavaScript-->
                 <script src="vendor/jquery/jquery.min.js"></script>
                 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+                <!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 
                 <!-- Core plugin JavaScript-->
                 <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
