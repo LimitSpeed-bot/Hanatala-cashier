@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ForgotController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PelangganController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\PenjualanDetailController;
 use App\Http\Controllers\PosController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\LaporanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,10 +33,13 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-// Rute untuk registrasi
-Route::controller(RegisterController::class)->prefix('register')->group(function () {
-    Route::get('', 'index')->name('register');
-    Route::post('store', 'store')->name('register.store');
+
+// Rute untuk Forgot
+Route::controller(ForgotController::class)->prefix('forgot')->group(function() {
+    Route::get('', 'index')->name('forgot');
+    Route::get('validasi/{token}', 'validasi')->name('forgot.validasi');
+    Route::post('validasi_act', 'validasi_act')->name('forgot.validasi_act');
+    Route::post('forgot', 'forgot')->name('forgot_password');
 });
 
 // Rute untuk login
@@ -51,6 +56,12 @@ Route::middleware(['auth'])->group(function () {
 
     // Rute untuk admin
     Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+        // Rute untuk registrasi
+        Route::controller(RegisterController::class)->prefix('register')->group(function () {
+            Route::get('', 'index')->name('register');
+            Route::post('store', 'store')->name('register.store');
+            Route::delete('destroy/{id}', 'destroy')->name('register.destroy');
+        });
         // Rute kategori
         Route::controller(KategoriController::class)->prefix('kategori')->group(function () {
             Route::get('', 'index')->name('kategori');
@@ -77,6 +88,7 @@ Route::middleware(['auth'])->group(function () {
         // Rute transaksi
         Route::controller(TransaksiController::class)->prefix('transaksi')->group(function () {
             Route::get('', 'index')->name('transaksi.index');
+            Route::get('report/cetak/{id}', 'cetak')->name('struk.cetak');
             Route::post('store', 'store')->name('transaksi.store');
             Route::get('barang', 'getBarang')->name('transaksi.barang');
             Route::get('riwayat', 'riwayat')->name('transaksi.riwayat');
@@ -87,6 +99,12 @@ Route::middleware(['auth'])->group(function () {
             Route::get('report/cetak/{id}', 'cetak')->name('report.cetak');
             Route::get('api/transaction/{id}', 'getTransactionDetails')->name('transaction.details');
             Route::delete('transaction/{id}', 'destroy')->name('transaction.destroy');
+            Route::get('report/print', 'print')->name('print');
+        });
+        Route::controller(LaporanController::class)->prefix('laporan')->group(function () {
+            Route::get('', 'index')->name('laporan');
+            Route::get('report/cetak/{id}', 'struk')->name('report.cetak');
+            Route::get('api/transaction/{id}', 'getTransactionDetails')->name('transaction.details');
             Route::get('report/print', 'print')->name('print');
         });
 

@@ -14,7 +14,8 @@ class RegisterController extends Controller
      */
     public function index()
     {
-        return view('user.register');
+        $user = User::all();
+        return view('user.register', compact('user'));
     }
 
     /**
@@ -36,7 +37,7 @@ class RegisterController extends Controller
             'password' => 'required|min:6',
         ]);
 
-        $data['name'] = $request->nama;
+        $data['nama'] = $request->nama;
         $data['email'] = $request->email;
         $data['password'] = Hash::make($request->password);
 
@@ -47,10 +48,10 @@ class RegisterController extends Controller
             'password' => $request->password,
         ];
 
-        if(Auth::attempt($login)){
-            return redirect()->route('admin.');
-        }else{
-            return redirect()->route('login')->with('failed','Email atau Password Salah');
+        if (Auth::attempt($login)) {
+            return redirect()->route('index');
+        } else {
+            return redirect()->route('login')->with('success', 'Email atau Password Salah');
         };
     }
 
@@ -83,6 +84,22 @@ class RegisterController extends Controller
      */
     public function destroy(string $id)
     {
-        //
-    }
+        $totalUsers = User::count();
+
+        if ($totalUsers <= 1) {
+            session()->flash('error', 'Data terakhir tidak dapat dihapus.');
+            return redirect()->route('index');
+        }
+
+        $user = User::find($id);
+
+        if ($user) {
+            $user->delete();
+            session()->flash('success', 'Data berhasil dihapus.');
+            return redirect()->route('index');
+        }
+
+        session()->flash('error', 'Data tidak ditemukan.');
+        return redirect()->route('index');
+}
 }

@@ -53,37 +53,38 @@
             <div class="sidebar-heading">Interface</div>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('/admin/kategori') }}">
-                    <i class="bi bi-boxes"></i>
+                <a class="nav-link collapsed" href="{{ url('/admin/kategori') }}">
+                    <i class="bi bi-box"></i>
                     <span>Kategori</span>
                 </a>
             </li>
 
+            <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('/admin/barang') }}">
-                    <i class="bi bi-box"></i>
+                <a class="nav-link collapsed" href="{{ url('/admin/barang') }}">
+                    <i class="bi bi-boxes"></i>
                     <span>Barang</span>
                 </a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="{{ url('/admin/pelanggan') }}">
                     <i class="bi bi-file-person-fill"></i>
                     <span>Pelanggan</span>
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url('/admin/kasir') }}">
-                    <i class="bi bi-calculator"></i>
-                    <span>Kasir</span>
-                </a>
-            </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ url('/admin/transaksi') }}">
                     <i class="bi bi-wallet2"></i>
                     <span>Transaksi</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('/admin/laporan') }}">
+                    <i class="bi bi-book"></i>
+                    <span>Laporan</span>
                 </a>
             </li>
         </ul>
@@ -104,46 +105,10 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small"
-                                placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    <h2 class="desktop">Pelanggan</h2>
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
 
 
                         <div class="topbar-divider d-none d-sm-block"></div>
@@ -152,8 +117,9 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Pengaturan</span>
+                                {{-- <img class="img-profile rounded-circle" src="img/undraw_profile.svg"> --}}
+                                <i class="bi bi-gear-fill"></i>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -173,6 +139,7 @@
                 <!-- Modal Tambah -->
                 <div class="modal fade" id="tambahModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">
+
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -188,15 +155,24 @@
                                             Pelanggan</label>
                                         <input type="text" class="form-control"
                                             id="nama_pelanggan"placeholder="namamu" name="nama_pelanggan">
+                                        @error('nama_pelanggan')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </div>
                                     <div class="mb-3">
                                         <label for="exampleFormControlInput1" class="form-label">No HP</label>
                                         <input type="number" class="form-control"
                                             id="no_hp"placeholder="0123456789101" name="no_hp">
+                                        @error('no_hp')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </div>
                                     <div class="mb-3">
                                         <label for="exampleFormControlInput1" class="form-label">Alamat</label>
                                         <textarea type="text" class="form-control" id="alamat"placeholder="alamat" name="alamat"></textarea>
+                                        @error('alamat')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -210,96 +186,123 @@
                 </div>
 
                 <div class="section-tabel">
-
-                    <h1>Pelanggan</h1><span><button class="btn btn-primary float-end" data-bs-toggle="modal"
-                            data-bs-target="#tambahModal">Tambah Pelanggan</button></span>
-
-                    <table class="table tb" id="myTable">
-                        <thead>
-                            <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">Nama Pelanggan</th>
-                                <th scope="col">No HP</th>
-                                <th scope="col">Alamat</th>
-                                <th scope="col">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($pelanggan as $pelanggans)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $pelanggans->nama_pelanggan }}</td>
-                                    <td>{{ $pelanggans->no_hp }}</td>
-                                    <td>{{ $pelanggans->alamat }}</td>
-                                    <td>
-                                        <div class="btn-group" role="group"
-                                            aria-label="Basic mixed styles example">
-                                            <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                                data-bs-target="#editModal{{ $pelanggans->id }}">Edit</button>
-                                            <form id="delete-form-{{ $pelanggans->id }}"
-                                                action="{{ route('admin.pelanggan.destroy', $pelanggans->id) }}"
-                                                method="POST" style="display:inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="button" class="btn btn-danger delete-button"
-                                                    data-id="{{ $pelanggans->id }}">Hapus</button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <!-- Modal Edit -->
-                                <div class="modal fade" id="editModal{{ $pelanggans->id }}" tabindex="-1"
-                                    aria-labelledby="editModalLabel{{ $pelanggans->id }}" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5"
-                                                    id="editModalLabel{{ $pelanggans->id }}">Edit Pelanggan
-                                                    {{ $pelanggans->id }}</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <form action="{{ route('admin.pelanggan.update', $pelanggans->id) }}"
-                                                method="POST">
-                                                @method('PUT')
-                                                @csrf
-                                                <div class="modal-body">
-                                                    <div class="mb-3">
-                                                        <label for="nama_pelanggan{{ $pelanggans->id }}"
-                                                            class="form-label">Nama Pelanggan</label>
-                                                        <input type="text" class="form-control"
-                                                            id="nama_pelanggan{{ $pelanggans->id }}"
-                                                            name="nama_pelanggan" placeholder="namamu"
-                                                            value="{{ old('nama_pelanggan', $pelanggans->nama_pelanggan) }}">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="no_hp{{ $pelanggans->id }}" class="form-label">No
-                                                            HP</label>
-                                                        <input type="number" class="form-control"
-                                                            id="no_hp{{ $pelanggans->id }}" name="no_hp"
-                                                            placeholder="0123456789101"
-                                                            value="{{ old('no_hp', $pelanggans->no_hp) }}">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="alamat{{ $pelanggans->id }}"
-                                                            class="form-label">Alamat</label>
-                                                        <textarea class="form-control" id="alamat{{ $pelanggans->id }}" name="alamat" placeholder="alamat">{{ old('alamat', $pelanggans->alamat) }}</textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Kembali</button>
-                                                    <button type="submit" class="btn btn-primary">Simpan</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
+                    <h1 class="mobile">Pelanggan</h1>
+                            <span><button class="btn btn-primary float-end tabel-margin" data-bs-toggle="modal"
+                                    data-bs-target="#tambahModal">Tambah Pelanggan</button></span>
+                            <div class="scrol">
+                                @if (session('success'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    {{ session('success') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                            @endif
+
+
+                                <table class="table tb" id="myTable">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">No</th>
+                                            <th scope="col">Nama Pelanggan</th>
+                                            <th scope="col">No HP</th>
+                                            <th scope="col">Alamat</th>
+                                            <th scope="col">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($pelanggan as $pelanggans)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $pelanggans->nama_pelanggan }}</td>
+                                                <td>{{ $pelanggans->no_hp }}</td>
+                                                <td>{{ $pelanggans->alamat }}</td>
+                                                <td class="distance">
+                                                    <div class="btn-group" role="group"
+                                                        aria-label="Basic mixed styles example">
+                                                        <button type="button" class="btn btn-warning btn-size"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#editModal{{ $pelanggans->id }}">Edit</button>
+                                                    </div>
+                                                    <div class="hapus">
+                                                        <form id="delete-form-{{ $pelanggans->id }}"
+                                                            action="{{ route('admin.pelanggan.destroy', $pelanggans->id) }}"
+                                                            method="POST" style="display:inline;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="button"
+                                                                class="btn btn-danger delete-button btn-size"
+                                                                data-id="{{ $pelanggans->id }}">Hapus</button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <!-- Modal Edit -->
+                                            <div class="modal fade" id="editModal{{ $pelanggans->id }}"
+                                                tabindex="-1" aria-labelledby="editModalLabel{{ $pelanggans->id }}"
+                                                aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5"
+                                                                id="editModalLabel{{ $pelanggans->id }}">Edit
+                                                                Pelanggan
+                                                                {{ $pelanggans->id }}</h1>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <form
+                                                            action="{{ route('admin.pelanggan.update', $pelanggans->id) }}"
+                                                            method="POST">
+                                                            @method('PUT')
+                                                            @csrf
+                                                            <div class="modal-body">
+                                                                <div class="mb-3">
+                                                                    <label for="nama_pelanggan{{ $pelanggans->id }}"
+                                                                        class="form-label">Nama Pelanggan</label>
+                                                                    <input type="text" class="form-control"
+                                                                        id="nama_pelanggan{{ $pelanggans->id }}"
+                                                                        name="nama_pelanggan" placeholder="namamu"
+                                                                        value="{{ old('nama_pelanggan', $pelanggans->nama_pelanggan) }}">
+                                                                </div>
+                                                                @error('nama_pelanggan')
+                                                                    <small class="text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                                <div class="mb-3">
+                                                                    <label for="no_hp{{ $pelanggans->id }}"
+                                                                        class="form-label">No
+                                                                        HP</label>
+                                                                    <input type="number" class="form-control"
+                                                                        id="no_hp{{ $pelanggans->id }}"
+                                                                        name="no_hp" placeholder="0123456789101"
+                                                                        value="{{ old('no_hp', $pelanggans->no_hp) }}">
+                                                                </div>
+                                                                @error('no_hp')
+                                                                    <small class="text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                                <div class="mb-3">
+                                                                    <label for="alamat{{ $pelanggans->id }}"
+                                                                        class="form-label">Alamat</label>
+                                                                    <textarea class="form-control" id="alamat{{ $pelanggans->id }}" name="alamat" placeholder="alamat">{{ old('alamat', $pelanggans->alamat) }}</textarea>
+                                                                </div>
+                                                                @error('alamat')
+                                                                    <small class="text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Kembali</button>
+                                                                <button type="submit"
+                                                                    class="btn btn-primary">Simpan</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                 <!-- Logout Modal-->
                 <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -326,52 +329,51 @@
                     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
                 </script>
                 <!-- Bootstrap core JavaScript-->
-                <script src="vendor/jquery/jquery.min.js"></script>
-                <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<!-- Bootstrap JS -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                <script src="/vendor/jquery/jquery.min.js"></script>
+                <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                <!-- jQuery -->
+                <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+                <!-- Bootstrap JS -->
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
                 <!-- Core plugin JavaScript-->
-                <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+                <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
                 <!-- Custom scripts for all pages-->
-                <script src="js/sb-admin-2.min.js"></script>
+                <script src="/js/sb-admin-2.min.js"></script>
 
                 <!-- Page level plugins -->
-                <script src="vendor/chart.js/Chart.min.js"></script>
+                <script src="/vendor/chart.js/Chart.min.js"></script>
 
                 <!-- Page level custom scripts -->
-                <script src="js/demo/chart-area-demo.js"></script>
-                <script src="js/demo/chart-pie-demo.js"></script>
+                <script src="/js/demo/chart-area-demo.js"></script>
+                <script src="/js/demo/chart-pie-demo.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                 <script>
                     new DataTable('#myTable');
-                    document.addEventListener("DOMContentLoaded", function () {
-    const deleteButtons = document.querySelectorAll(".delete-button");
+                    document.addEventListener("DOMContentLoaded", function() {
+                        const deleteButtons = document.querySelectorAll(".delete-button");
 
-    deleteButtons.forEach(button => {
-        button.addEventListener("click", function () {
-            const formId = this.getAttribute("data-id");
-            Swal.fire({
-                title: "Kamu yakin ingin?",
-                text: "Kamu tidak akan bisa mengembalikan data",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Hapus"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Submit the associated form
-                    document.getElementById(`delete-form-${formId}`).submit();
-                }
-            });
-        });
-    });
-});
-
+                        deleteButtons.forEach(button => {
+                            button.addEventListener("click", function() {
+                                const formId = this.getAttribute("data-id");
+                                Swal.fire({
+                                    title: "Kamu yakin ingin?",
+                                    text: "Kamu tidak akan bisa mengembalikan data",
+                                    icon: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#3085d6",
+                                    cancelButtonColor: "#d33",
+                                    confirmButtonText: "Hapus"
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        // Submit the associated form
+                                        document.getElementById(`delete-form-${formId}`).submit();
+                                    }
+                                });
+                            });
+                        });
+                    });
                 </script>
 </body>
 

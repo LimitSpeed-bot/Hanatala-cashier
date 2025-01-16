@@ -52,6 +52,14 @@ class TransaksiController extends Controller
             ]);
         }
 
-        return response()->json(['message' => 'Transaksi berhasil disimpan']);
+        return response()->json([
+            'message' => 'Transaksi berhasil disimpan.',
+            'transaksi_id' => $transaksi->id,
+        ]);
+    }
+    public function cetak($id)
+    {
+        $transaksi = Transaksi::with('details.barang')->findOrFail($id);
+        return view('cetak', compact('transaksi'));
     }
 }

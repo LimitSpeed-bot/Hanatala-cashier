@@ -39,22 +39,21 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-2">Lupa Passwordmu?</h1>
-                                        <p class="mb-4">Masukkan Email yang Terdaftar agar Kami Bisa Mengirimkan Link
-                                            Pemulihan!!</p>
+                                        <h1 class="h4 text-gray-900 mb-4">Masukkan Password Baru</h1>
                                     </div>
-                                    <form class="user" method="POST" action="{{ route('forgot_password') }}">
+                                    <form class="user" method="POST" action="{{ route('forgot.validasi_act') }}">
                                         @csrf
+                                        <input type="hidded" class="token" name="token" value="{{$token}}">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
+                                            <input type="password" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address..." name="email">
+                                                placeholder="Masukkan Password Baru" name="password">
                                         </div>
-                                        @error('email')
+                                        @error('password')
                                             <small>{{ $message }}</small>
                                         @enderror
                                         <button type="submit" class="btn btn-primary btn-user btn-block">
-                                            Reset Password
+                                            Simpan
                                         </button>
                                     </form>
                                     <hr>

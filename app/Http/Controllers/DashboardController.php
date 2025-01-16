@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DetailTransaksi;
-use App\Models\Pelanggan;
+use App\Models\Barang;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -12,6 +11,9 @@ class DashboardController extends Controller
 {
     public function index()
 {
+    $barang = Barang::count();
+    $totaltransaksi = Transaksi::count();
+
     $month = DB::table('transaksis')
     ->whereMonth('tanggal_jual', date('m'))
     ->whereYear('tanggal_jual', date('Y'))
@@ -22,7 +24,7 @@ class DashboardController extends Controller
     ->sum('total');
 
     $transaksi = Transaksi::with(['details.barang', 'pelanggan'])->get();
-    return view('index', compact('transaksi', 'year', 'month'));
+    return view('index', compact('transaksi', 'year', 'month', 'barang', 'totaltransaksi'));
 }
 
 
@@ -49,41 +51,32 @@ class DashboardController extends Controller
     }
 
     public function print(Request $request)
-    {
-        $query = Transaksi::query();
+{
+    $query = Transaksi::query();
 
-        // Filter berdasarkan tanggal
-        if (!empty($request->tanggal)) {
-            $query->whereDate('tanggal_jual', $request->tanggal);
-        }
+    // Filter berdasarkan rentang tanggal
+    if (!empty($request->range_tanggal)) {
+        $dates = explode(' - ', $request->range_tanggal); // Pisahkan input menjadi array
+        $startDate = $dates[0];
+        $endDate = $dates[1];
 
-        // Filter berdasarkan bulan
-        if (!empty($request->bulan)) {
-            $query->whereMonth('tanggal_jual', date('m', strtotime($request->bulan)))
-                  ->whereYear('tanggal_jual', date('Y', strtotime($request->bulan)));
-        }
-
-        // Filter berdasarkan tahun
-        if (!empty($request->tahun)) {
-            $query->whereYear('tanggal_jual', $request->tahun);
-        }
-
-        // Ambil data hasil filter
-        $transaksi = $query->with(['details.barang'])->get();
-
-        $pdf = \PDF::loadView('report', compact('transaksi'));
-
-        // Tampilkan atau unduh file PDF
-        return $pdf->stream('laporan_transaksi.pdf');
+        $query->whereBetween('tanggal_jual', [$startDate, $endDate]);
     }
+
+    // Ambil data hasil filter
+    $transaksi = $query->with(['details.barang'])->get();
+
+    // Buat PDF
+    $pdf = \PDF::loadView('report', compact('transaksi'));
+
+    // Tampilkan atau unduh file PDF
+    return $pdf->stream('laporan_transaksi.pdf');
+}
+
 
     public function cetak($id)
     {
         $transaksi = Transaksi::with('details.barang')->findOrFail($id);
         return view('cetak', compact('transaksi'));
     }
-
-
-
-
 }

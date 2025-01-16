@@ -33,10 +33,27 @@ class BarangController extends Controller
      */
     public function store(Request $request)
     {
-        $kategori = Kategori::find($request->kategori_id);
-        Barang::create($request->all());
-        return redirect()->route('admin.barang')->with('Data Masuk');
+        // Validasi input
+        $validatedData = $request->validate([
+            'nama_barang' => 'required|string|max:255|unique:barangs,nama_barang',
+            'kategori_id' => 'required|exists:kategoris,id',
+            'harga'       => 'required|numeric|min:0',
+        ], [
+            'nama_barang.required' => 'Nama barang harus diisi.',
+            'nama_barang.unique'   => 'Nama barang sudah terdaftar.',
+            'kategori_id.required' => 'Kategori harus dipilih.',
+            'kategori_id.exists'   => 'Kategori yang dipilih tidak valid.',
+            'harga.required'       => 'Harga harus diisi.',
+            'harga.numeric'        => 'Harga harus berupa angka.',
+        ]);
+
+        // Simpan data yang sudah divalidasi
+        Barang::create($validatedData);
+
+        // Redirect dengan pesan sukses
+        return redirect()->route('admin.barang')->with('success', 'Data barang berhasil ditambahkan.');
     }
+
 
     /**
      * Display the specified resource.

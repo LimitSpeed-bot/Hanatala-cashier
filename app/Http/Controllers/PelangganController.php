@@ -21,9 +21,17 @@ class PelangganController extends Controller
      */
     public function store(Request $request)
     {
-       Pelanggan::create($request->all());
-       return redirect()->route('admin.pelanggan')->with('success', 'Pelanggan ditambahkan');
+        $request->validate([
+            'nama_pelanggan' => 'required',
+            'no_hp' => 'required|numeric',
+            'alamat' => 'required',
+        ]);
+
+        Pelanggan::create($request->all());
+
+        return redirect()->back()->with('success', 'Pelanggan berhasil ditambahkan.');
     }
+
 
     /**
      * Display the specified resource.

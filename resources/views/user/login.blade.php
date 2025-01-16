@@ -18,7 +18,7 @@
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="{{ asset('css/sb-admin-2.css') }}" rel="stylesheet">
 
 </head>
 
@@ -35,7 +35,9 @@
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                            <div class="col-lg-6 d-none d-lg-block bg-login-image">
+                                <img src="/img/login.png" style="width: 100%"   alt="">
+                            </div>
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
@@ -58,14 +60,14 @@
                                                 <small>{{ $message }}</small>
                                             @enderror
                                         </div>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                                        <button type="submit" class="btn  btn-user btn-block" style="background-color: #e8acac; color: #fff ">
                                             Login
                                         </button>
                                     </form>
 
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="forgot-password.html">Forgot Password?</a>
+                                        <a class="small" href="{{Route('forgot')}}">Forgot Password?</a>
                                     </div>
                                 </div>
                             </div>

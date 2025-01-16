@@ -15,8 +15,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
 
-        <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
@@ -44,7 +46,7 @@
             <hr class="sidebar-divider my-0">
 
             <li class="nav-item">
-                <a class="nav-link" href="{{url('/index')}}">
+                <a class="nav-link" href="{{ url('/index') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -52,39 +54,37 @@
             <hr class="sidebar-divider">
 
             <div class="sidebar-heading">Interface</div>
-
             <li class="nav-item">
-                <a class="nav-link" href="{{url('/admin/kategori')}}">
-                    <i class="bi bi-boxes"></i>
+                <a class="nav-link collapsed" href="{{ url('/admin/kategori') }}">
+                    <i class="bi bi-box"></i>
                     <span>Kategori</span>
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="{{url('/admin/barang')}}">
-                    <i class="bi bi-box"></i>
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item active">
+                <a class="nav-link collapsed" href="{{ url('/admin/barang') }}">
+                    <i class="bi bi-boxes"></i>
                     <span>Barang</span>
                 </a>
             </li>
-
             <li class="nav-item">
-                <a class="nav-link" href="{{url('/admin/pelanggan')}}">
+                <a class="nav-link" href="{{ url('/admin/pelanggan') }}">
                     <i class="bi bi-file-person-fill"></i>
                     <span>Pelanggan</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{url('/admin/kasir')}}">
-                    <i class="bi bi-calculator"></i>
-                    <span>Kasir</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="{{url('/admin/transaksi')}}">
+                <a class="nav-link" href="{{ url('/admin/transaksi') }}">
                     <i class="bi bi-wallet2"></i>
                     <span>Transaksi</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('/admin/laporan') }}">
+                    <i class="bi bi-book"></i>
+                    <span>Laporan</span>
                 </a>
             </li>
         </ul>
@@ -104,46 +104,12 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small"
-                                placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
 
+                    <h2 class="desktop">Barang</h2>
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
+
 
 
                         <div class="topbar-divider d-none d-sm-block"></div>
@@ -152,15 +118,16 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Pengaturan</span>
+                                {{-- <img class="img-profile rounded-circle" src="img/undraw_profile.svg"> --}}
+                                <i class="bi bi-gear-fill"></i>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{url('/login')}}" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="{{ url('/login') }}" data-toggle="modal"
+                                    data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -184,124 +151,172 @@
                             <form action="{{ route('admin.barang.store') }}" method="POST">
                                 @csrf
                                 <div class="modal-body">
+                                    <!-- Nama Barang -->
                                     <div class="mb-3">
-                                        <label for="exampleFormControlInput1" class="form-label">Nama Barang</label>
-                                        <input type="text" class="form-control"id="nama_barang"
-                                            placeholder="Bunga Ukuran 12" name="nama_barang">
+                                        <label for="nama_barang" class="form-label">Nama Barang</label>
+                                        <input type="text" class="form-control" id="nama_barang"
+                                            placeholder="Bunga Ukuran 12" name="nama_barang"
+                                            value="{{ old('nama_barang') }}">
+                                        @if ($errors->has('nama_barang'))
+                                            <small class="text-danger">{{ $errors->first('nama_barang') }}</small>
+                                        @endif
                                     </div>
+
+                                    <!-- Harga -->
                                     <div class="mb-3">
-                                        <label for="exampleFormControlInput1" class="form-label">Harga</label>
-                                        <input type="number" class="form-control"id="harga"
-                                            placeholder="10000" name="harga">
+                                        <label for="harga" class="form-label">Harga</label>
+                                        <input type="number" class="form-control" id="harga"
+                                            placeholder="10000" name="harga"
+                                            value="{{ old('harga') }}">
+                                        @if ($errors->has('harga'))
+                                            <small class="text-danger">{{ $errors->first('harga') }}</small>
+                                        @endif
                                     </div>
+
+                                    <!-- Kategori -->
                                     <div class="mb-3">
-                                        <label for="exampleFormControlInput1" class="form-label">Kategori</label>
-                                        <select class="form-select" id="kategori_id" name="kategori_id" required>
+                                        <label for="kategori_id" class="form-label">Kategori</label>
+                                        <select class="form-select" id="kategori_id" name="kategori_id">
+                                            <option value="">Pilih Kategori</option>
                                             @foreach ($kategori as $kategoris)
                                                 <option value="{{ $kategoris->id }}"
-                                                    {{ $kategoris->kategori_id == $kategoris->id ? 'selected' : '' }}>
+                                                    {{ old('kategori_id') == $kategoris->id ? 'selected' : '' }}>
                                                     {{ $kategoris->nama_kategori }}
                                                 </option>
                                             @endforeach
                                         </select>
+                                        @if ($errors->has('kategori'))
+                                            <small class="text-danger">{{ $errors->first('kategori') }}</small>
+                                        @endif
                                     </div>
                                 </div>
+
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Kembali</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
                                     <button type="submit" class="btn btn-primary">Simpan</button>
                                 </div>
                             </form>
+
                         </div>
                     </div>
                 </div>
 
                 <div class="section-tabel">
-                    <h1>Barang</h1><span><button class="btn btn-primary float-end" data-bs-toggle="modal"
-                            data-bs-target="#tambahModal">Tambah Barang</button></span>
+                    <h1 class="mobile">Barang</h1>
 
-                    <table class="table tb" id="myTable">
-                        <thead>
-                            <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">Nama Barang</th>
-                                <th scope="col">Harga</th>
-                                <th scope="col">Kategori</th>
-                                <th scope="col">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($barang as $item)
+                            <span><button class="btn btn-primary float-end tabel-margin"
+                            data-bs-toggle="modal" data-bs-target="#tambahModal">Tambah Barang</button></span>
+                    <div class="scrol">
+                        @if (session('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+
+                        <table class="table tb" id="myTable">
+                            <thead>
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $item->nama_barang }}</td>
-                                    <td>{{ $item->harga }}</td>
-                                    <td>{{ $item->kategori->nama_kategori }}</td>
-                                    <td>
-                                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                            <!-- Tombol Ubah -->
-                                            <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                                data-bs-target="#editModal{{ $item->id }}">Ubah</button>
-
-                                            <!-- Tombol Hapus -->
-                                            <form action="{{ route('admin.barang.destroy', $item->id) }}" method="POST" style="display:inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus barang ini?')">Hapus</button>
-                                            </form>
-                                        </div>
-                                    </td>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Nama Barang</th>
+                                    <th scope="col">Harga</th>
+                                    <th scope="col">Kategori</th>
+                                    <th scope="col">Aksi</th>
                                 </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($barang as $item)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $item->nama_barang }}</td>
+                                        <td>{{ $item->harga }}</td>
+                                        <td>{{ $item->kategori->nama_kategori }}</td>
+                                        <td class="distance">
+                                            <div class="btn-group" role="group"
+                                                aria-label="Basic mixed styles example">
+                                                <!-- Tombol Ubah -->
+                                                <button type="button" class="btn btn-warning btn-size"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#editModal{{ $item->id }}">Ubah</button>
+                                            </div>
+                                            <div class="hapus">
+                                                <!-- Tombol Hapus -->
+                                                <form id="delete-form-{{ $item->id }}"
+                                                    action="{{ route('admin.barang.destroy', $item->id) }}"
+                                                    method="POST" style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                        class="btn btn-danger delete-button btn-size">Hapus</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
 
-                                <!-- Modal Edit -->
-                                <div class="modal fade" id="editModal{{ $item->id }}" tabindex="-1"
-                                    aria-labelledby="editModalLabel{{ $item->id }}" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <form action="{{ route('admin.barang.update', $item->id) }}" method="POST">
-                                                @csrf
-                                                @method('PUT')
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="editModalLabel{{ $item->id }}">Edit Barang</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="mb-3">
-                                                        <label for="nama_barang{{ $item->id }}" class="form-label">Nama Barang</label>
-                                                        <input type="text" class="form-control" id="nama_barang{{ $item->id }}"
-                                                            name="nama_barang" value="{{ old('nama_barang', $item->nama_barang) }}" required>
+                                    <!-- Modal Edit -->
+                                    <div class="modal fade" id="editModal{{ $item->id }}" tabindex="-1"
+                                        aria-labelledby="editModalLabel{{ $item->id }}" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <form action="{{ route('admin.barang.update', $item->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title"
+                                                            id="editModalLabel{{ $item->id }}">
+                                                            Edit Barang</h5>
+                                                        <button type="button" class="btn-close"
+                                                            data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
-                                                    <div class="mb-3">
-                                                        <label for="harga{{ $item->id }}" class="form-label">Harga</label>
-                                                        <input type="number" class="form-control" id="harga{{ $item->id }}" name="harga"
-                                                            value="{{ old('harga', $item->harga) }}" required>
+                                                    <div class="modal-body">
+                                                        <div class="mb-3">
+                                                            <label for="nama_barang{{ $item->id }}"
+                                                                class="form-label">Nama Barang</label>
+                                                            <input type="text" class="form-control"
+                                                                id="nama_barang{{ $item->id }}"
+                                                                name="nama_barang"
+                                                                value="{{ old('nama_barang', $item->nama_barang) }}"
+                                                                required>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="harga{{ $item->id }}"
+                                                                class="form-label">Harga</label>
+                                                            <input type="number" class="form-control"
+                                                                id="harga{{ $item->id }}" name="harga"
+                                                                value="{{ old('harga', $item->harga) }}" required>
+                                                        </div>
+                                                        <!-- Input Kategori -->
+                                                        <div class="mb-3">
+                                                            <label for="kategori_id{{ $item->id }}"
+                                                                class="form-label">Kategori</label>
+                                                            <select class="form-select"
+                                                                id="kategori_id{{ $item->id }}"
+                                                                name="kategori_id" required>
+                                                                <option value="" disabled>Pilih Kategori</option>
+                                                                @foreach ($kategori as $kategoris)
+                                                                    <option value="{{ $kategoris->id }}"
+                                                                        {{ $item->kategori_id == $kategoris->id ? 'selected' : '' }}>
+                                                                        {{ $kategoris->nama_kategori }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
                                                     </div>
-                                                    <!-- Input Kategori -->
-                                                    <div class="mb-3">
-                                                        <label for="kategori_id{{ $item->id }}" class="form-label">Kategori</label>
-                                                        <select class="form-select" id="kategori_id{{ $item->id }}" name="kategori_id" required>
-                                                            <option value="" disabled>Pilih Kategori</option>
-                                                            @foreach ($kategori as $kategoris)
-                                                                <option value="{{ $kategoris->id }}"
-                                                                    {{ $item->kategori_id == $kategoris->id ? 'selected' : '' }}>
-                                                                    {{ $kategoris->nama_kategori }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Batal</button>
+                                                        <button type="submit" class="btn btn-primary">Simpan</button>
                                                     </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                                    <button type="submit" class="btn btn-primary">Simpan</button>
-                                                </div>
-                                            </form>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
-                        </tbody>
+                                @endforeach
+                            </tbody>
 
-                    </table>
+                        </table>
+                    </div>
                 </div>
 
                 <!-- Logout Modal-->
@@ -327,31 +342,89 @@
                 <script src="{{ url('dist/js/jquery-3.7.1.js') }}"></script>
                 <script src="{{ url('dist/js/dataTables.js') }}"></script>
                 <!-- Bootstrap core JavaScript-->
-                <script src="vendor/jquery/jquery.min.js"></script>
-                <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                <script src="/vendor/jquery/jquery.min.js"></script>
+                <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
                 <!-- Core plugin JavaScript-->
-                <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+                <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
                 <!-- Custom scripts for all pages-->
-                <script src="js/sb-admin-2.min.js"></script>
+                <script src="/js/sb-admin-2.min.js"></script>
 
                 <!-- Page level plugins -->
-                <script src="vendor/chart.js/Chart.min.js"></script>
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<!-- Bootstrap JS -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                <script src="/vendor/chart.js/Chart.min.js"></script>
+                <!-- jQuery -->
+                <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+                <!-- Bootstrap JS -->
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
                 <!-- Page level custom scripts -->
-                <script src="js/demo/chart-area-demo.js"></script>
-                <script src="js/demo/chart-pie-demo.js"></script>
+                <script src="../js/demo/chart-area-demo.js"></script>
+                <script src="../js/demo/chart-pie-demo.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
                     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
                 </script>
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                 <script>
                     new DataTable('#myTable');
+
+                    $(document).ready(function() {
+                                $('#kategori_id').select2({
+                                    placeholder: "Cari kategori",
+                                    allowClear: true,
+                                    width: '100%'
+                                });
+                            });
+
+
+                $('#kategori_id').select2({
+                    placeholder: "Cari kategori",
+                    allowClear: true,
+                    ajax: {
+                        url: '{{ route('admin.barang') }}',
+                        dataType: 'json',
+                        delay: 250,
+                        processResults: function(data) {
+                            return {
+                                results: data.map(item => ({
+                                    id: item.id,
+                                    text: item.nama_pelanggan
+                                }))
+                            };
+                        },
+                        cache: true
+                    },
+                    width: '100%'
+                });
+
+                    document.addEventListener("DOMContentLoaded", function() {
+                        const deleteButtons = document.querySelectorAll(".delete-button");
+
+                        deleteButtons.forEach(button => {
+                            button.addEventListener("click", function(e) {
+                                e.preventDefault(); // Prevent form submission before confirmation
+                                const formId = this.closest("form").id; // Get form id
+
+                                Swal.fire({
+                                    title: "Kamu yakin ingin menghapus?",
+                                    text: "Kamu tidak akan bisa mengembalikan data ini!",
+                                    icon: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#3085d6",
+                                    cancelButtonColor: "#d33",
+                                    confirmButtonText: "Ya, Hapus!",
+                                    cancelButtonText: "Batal"
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        // If confirmed, submit the form
+                                        document.getElementById(formId).submit();
+                                    }
+                                });
+                            });
+                        });
+                    });
                 </script>
 </body>
 

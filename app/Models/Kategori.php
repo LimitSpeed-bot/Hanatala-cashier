@@ -19,10 +19,4 @@ class Kategori extends Model
     {
         return $this->hasMany(Barang::class, 'kategori_id');
     }
-    public static function rules()
-    {
-        return [
-            'nama_kategori' => 'required|string|max:255|unique:kategori,nama_kategori',
-        ];
-    }
 }

@@ -83,12 +83,6 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ url('/admin/kasir') }}">
-                    <i class="bi bi-calculator"></i>
-                    <span>Kasir</span>
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ url('/admin/transaksi') }}">
                     <i class="bi bi-wallet2"></i>
                     <span>Transaksi</span>
@@ -187,6 +181,7 @@
 
 
                     <!-- Content Row -->
+                    <div class="container">
                         <div class="card">
                             <div class="card-header py-3 d-flex">
                                 <h6 class="m-0 font-weight-bold text-primary">
@@ -245,6 +240,7 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
                     <!-- Content Row -->
 
                 </div>

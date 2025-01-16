@@ -28,15 +28,15 @@ class KategoriController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'nama_kategori' => 'required|string|max:255|unique:kategoris,nama_kategori',
-        ]);
-        Kategori::create($validated);
-        return redirect()->back()->withErrors($validated)->withInput();
-        return redirect()->route('admin.kategori')->with('Data masuk');
-        $request->validate(Kategori::rules());
-    }
+{
+    $validated = $request->validate([
+        'nama_kategori' => 'required|string|max:255|unique:kategoris,nama_kategori',
+    ]);
+
+    Kategori::create($validated);
+    return redirect()->route('admin.kategori')->with('success', 'Kategori ditambahkan');
+}
+
 
     /**
      * Display the specified resource.
